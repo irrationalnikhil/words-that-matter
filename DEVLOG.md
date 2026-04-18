@@ -183,3 +183,73 @@ Added "Give feedback" link to the top bar (desktop) and to the "About this reade
 - Dark mode
 - Fifth interactive: prompt randomization dice-roll (briefing §7 risk mitigation)
 - Citation hover cards showing referenced paper abstracts
+
+---
+
+## Session 4 — 2026-04-18
+
+### Priority 1: Accuracy fixes (critical)
+
+**Decision: Fix hypotheses.json novelty check assignments**
+The paper (§2.4 ¶4 + §5 ¶2) is explicit: the two features that survived the novelty check (controlling for BU features, p < .001) are **surprise/cliffhanger** and **multimedia reference**. Session 3's hypotheses.json incorrectly marked positive human behavior as noveltyCheck_significant: true and surprise/cliffhanger as false. Fixed. Counterfactual: even though surprise/cliffhanger was not significant in Study 1 (p = 0.297), it showed significance in the novelty check — a suppression effect where confounders mask the raw signal.
+
+**Decision: Replace all paraphrased "verbatim" text with actual paper quotes**
+Three TextRail components (StageGenerate, StageRank, StageFilter) and the FilteringFunnel had editorial paraphrases presented as "From the paper (verbatim)." Replaced all with actual excerpts from paper.json. Also removed a fabricated quote in StageFilter caveat ("the ML model may be capturing meaningful language patterns...") and replaced with the actual §5 text.
+
+**Decision: Fix ExitPanel editorial text**
+Original text said "Four produced significant effects in the first study; two of those also survived a novelty check." This was misleading: one of the two novelty survivors (surprise/cliffhanger) was NOT among the four significant features. Rewritten to distinguish the two analyses and name the specific features.
+
+**Decision: Fix landing page pitch text**
+Original said "using LLMs" — the paper's method integrates LLMs, ML, and psychology experiments. Updated to name all three.
+
+### Priority 2: Reviewer questions (replacing Tally form)
+
+**Decision: Inline reviewer questions instead of Tally form**
+Only one reviewer (Rafael). Replaced the Tally placeholder URL with inline questions in the AppendixSection "About" block. 5 questions from briefing §6 plus metadata field. Updated TabSwitcher "Give feedback" link to scroll to #sm-about instead of opening an external form.
+
+### Priority 3: Accessibility completion
+
+**Decision: Darken semantic colors for WCAG AA compliance**
+Computed contrast ratios for finding/caveat/novel text on paper background. All three failed AA 4.5:1. Darkened:
+- finding: #6b8e4e → #537a3a (3.3:1 → 4.7:1)
+- caveat: #b85c38 → #ad5633 (4.3:1 → 4.8:1)
+- novel: #8b6bb1 → #7f5fa3 (4.0:1 → 4.9:1)
+Updated theme.ts, tailwind.config.ts, and globals.css. Border accents and bar colors also darkened (slight visual difference, better accessibility).
+
+**Decision: Touch target sizing via CSS**
+Added min-height: 44px for range inputs and role="switch" elements. Did NOT apply blanket 44px to all buttons — that would break many small UI elements (tab switches, pill badges). Targeted approach is pragmatic.
+
+**Decision: aria-label on key landmarks**
+Added aria-label to main elements on annotated and playground pages, and to the source materials footer.
+
+### Priority 4: Glossary audit
+
+**Decision: Fix pre-registration citation to match paper's reference**
+Glossary originally cited Nosek et al. 2018 (a valid general source) but the paper's own reference [39] is Simmons, Nelson & Simonsohn 2021. Changed to match the paper's citation per user preference: use the paper's own references wherever possible.
+
+**Noted: hypothesis-morphing term anchor has zero-length offset in paper.json**
+The termAnchor for "hypothesis morphing" in p-2.3-3 has offset: 0, length: 0. This means it won't highlight in the text. Not fixed this session (would require paper.json modification for a rendering issue, not a factual error). v2 candidate.
+
+### Priority 5: OG image & meta tags
+
+**Decision: SVG OG image instead of PNG**
+Created public/og-image.svg with project typography, pipeline dots metaphor, and warm paper background. SVG allows sharp rendering at any resolution without requiring canvas/image generation in the sandbox. Added full OpenGraph and Twitter card meta tags in layout.tsx.
+
+### Build & deploy
+
+**Decision: Bash sandbox locked — instructions for manual push**
+The bash sandbox was locked for the entire session (hung process from Session 3 build attempt). All edits verified via file reads and counterfactual checking. Build verification deferred to user's terminal. Instructions provided for git add, commit, and push.
+
+### Open Questions
+
+1. **Build verification**: Need to run `npm run build` and `npx next lint` locally. The sandbox has been locked for 2 sessions.
+2. **Performance audit**: 250kb gzip budget still unchecked. Lighthouse audit needed.
+3. **Cross-browser testing**: Not done. Priority for next session or manual testing.
+4. **Gloss.tsx and Pill.tsx**: Built but not integrated. Current inline styling in FilteringFunnel and HypothesisResults is equivalent. Available for future use.
+5. **hypothesis-morphing anchor**: Zero-length termAnchor in paper.json p-2.3-3.
+
+### v2 Candidates added this session
+- Integrate Gloss.tsx for editorial text containers (if more gloss text is added)
+- Integrate Pill.tsx for paragraph-level category labels in annotated edition
+- Fix hypothesis-morphing termAnchor offset
+- PNG version of OG image (some social platforms handle SVG poorly)

@@ -1,10 +1,10 @@
 # COWORK-CONTEXT — Running State for Future Sessions
 
-## Current State (as of 2026-04-18, end of Session 3)
+## Current State (as of 2026-04-18, end of Session 4)
 
 **Live URL:** https://words-that-matter.vercel.app
 **Stack:** Next.js 14.2.35 + React 18 + Tailwind 3.4 + TypeScript
-**Phase:** Phase 0-1 complete. Phase 2 (Shared Infrastructure) complete. Phase 3 (Option A) ~90% done. Phase 4 (Option B) ~90% done. Phase 5 (Polish) ~40%.
+**Phase:** Phase 0-1 complete. Phase 2 (Shared Infrastructure) complete. Phase 3 (Option A) ~95% done. Phase 4 (Option B) ~95% done. Phase 5 (Polish) ~85%.
 
 ## What's Working
 
@@ -43,13 +43,18 @@
 - Welcome panel with description
 - Previous/Next stage navigation buttons
 
-### Accessibility (Phase 5 — ~40%)
+### Accessibility (Phase 5 — ~85%)
 - ink-faint color darkened to #767676 (4.54:1 contrast, WCAG AA compliant)
 - Button text switched from white to dark for AA-compliant accent buttons (6.25:1)
 - Global `:focus-visible` ring in accent color
 - `prefers-reduced-motion` respected (all transitions/animations disabled)
 - All sliders have `aria-label`, `aria-valuenow`, `aria-valuemin`, `aria-valuemax`
 - FDR toggle has `role="switch"` with `aria-checked`
+- **Session 4**: Semantic colors (finding/caveat/novel) darkened for WCAG AA 4.5:1 text contrast
+- **Session 4**: Touch target sizing for range inputs and toggles (≥44px)
+- **Session 4**: aria-label on main, footer, workspace landmarks
+- **Session 4**: All TextRail quotes verified verbatim; fabricated quote removed
+- **Session 4**: OG image and Twitter card meta tags added
 
 ## What's Not Built Yet
 
@@ -59,13 +64,13 @@
 ### Phase 4: Option B (remaining ~10%)
 2. **Scroll-driven stage advancement** — deferred to v2 (see DEVLOG for rationale).
 
-### Phase 5: Polish (remaining ~60%)
+### Phase 5: Polish (remaining ~15%)
 3. Lighthouse performance audit (250kb budget)
 4. Cross-browser testing (Safari iOS, Chrome Android, Firefox desktop)
-5. Copy-edit all editorial/gloss text
-6. Create actual Tally feedback form with 5 reviewer questions
-7. Glossary accuracy audit (cross-check against updated references.json)
-8. Build verification (bash sandbox was locked for Session 3 — code reviewed but not build-tested)
+5. ~~Copy-edit all editorial/gloss text~~ ✅ Session 4
+6. ~~Reviewer questions~~ ✅ Session 4 (inline, not Tally)
+7. ~~Glossary accuracy audit~~ ✅ Session 4
+8. Build verification — need to run `npm run build` + `npx next lint` locally
 
 ## Content Files Status
 | File | Status | Notes |
@@ -127,10 +132,8 @@
 - Build mobile-first, desktop-enhanced
 - The framework should be reusable for other papers (content in JSON, components generic)
 
-## Session 4 Priority: Build Verification & Polish
-1. **FIRST**: Run `npm run build` to verify Session 3 code compiles
-2. Create actual Tally feedback form
-3. Lighthouse performance audit
-4. Cross-browser testing
-5. Copy-edit all editorial text
-6. Push to GitHub → Vercel auto-deploys
+## Session 5 Priority: Portability & Generalization
+1. Build verification: `npm run build` + `npx next lint`
+2. Lighthouse performance audit (250kb budget)
+3. Cross-browser testing
+4. Portability refactoring (per briefing Session 5 scope)

@@ -2,7 +2,7 @@
 
 ## Current State (as of 2026-04-18, end of Session 2)
 
-**Live URL:** https://words-that-work.vercel.app
+**Live URL:** https://words-that-matter.vercel.app
 **Stack:** Next.js 14.2.35 + React 18 + Tailwind 3.4 + TypeScript
 **Phase:** Phase 0-1 complete. Phase 2 (Shared Infrastructure) complete. Phase 3 (Option A) ~60% done. Phase 4 (Option B) ~30% done.
 
@@ -97,7 +97,7 @@
 ## Spec Reference
 - **Briefing:** `words-that-work-briefing.md` in project root (AUTHORITATIVE — if anything conflicts, briefing wins)
 - **Source PDF:** `61_Words_that_work_Using_langu.pdf` in project root
-- **Live URL:** https://words-that-work.vercel.app
+- **Live URL:** https://words-that-matter.vercel.app
 - **Paper URL:** https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4926398
 - **OSF:** https://osf.io/d5xvb/?view_only=301ca63ed1004401adb697a625ff8d61
 - **Pre-registration:** https://aspredicted.org/S6H_ZPF

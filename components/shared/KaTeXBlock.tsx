@@ -1,7 +1,6 @@
 'use client'
 
-import { useMemo } from 'react'
-import katex from 'katex'
+import { useState, useEffect } from 'react'
 
 interface KaTeXBlockProps {
   latex: string
@@ -12,22 +11,27 @@ interface KaTeXBlockProps {
 /**
  * Renders a LaTeX equation using KaTeX.
  * Displayed in a paper-subtle background block with optional label right-aligned.
- * Uses dangerouslySetInnerHTML with KaTeX's trusted renderToString output.
+ * Uses useEffect to ensure KaTeX only renders in the browser (not during SSR).
  */
 export default function KaTeXBlock({ latex, label, displayMode = true }: KaTeXBlockProps) {
-  const html = useMemo(() => {
-    try {
-      return katex.renderToString(latex, {
-        displayMode,
-        throwOnError: false,
-        trust: false,
-        strict: false,
-      })
-    } catch (e) {
-      // Fallback: show raw LaTeX in mono font if rendering fails
-      console.error('KaTeX render error:', e)
-      return null
-    }
+  const [html, setHtml] = useState<string | null>(null)
+
+  useEffect(() => {
+    // Dynamic import ensures KaTeX is only loaded client-side
+    import('katex').then((katex) => {
+      try {
+        const rendered = katex.default.renderToString(latex, {
+          displayMode,
+          throwOnError: false,
+          trust: false,
+          strict: false,
+        })
+        setHtml(rendered)
+      } catch (e) {
+        console.error('KaTeX render error:', e)
+        setHtml(null)
+      }
+    })
   }, [latex, displayMode])
 
   return (

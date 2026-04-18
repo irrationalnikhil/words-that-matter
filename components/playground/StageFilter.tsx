@@ -1,45 +1,49 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useCallback } from 'react'
+import {
+  ScatterChart,
+  Scatter,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  Cell,
+  ReferenceLine,
+  ZAxis,
+} from 'recharts'
 import hypothesesData from '@/content/hypotheses.json'
+import embeddingData from '@/content/embeddingSpace.json'
 import TextRail from './TextRail'
 
 /**
  * Stage 3 — Filter.
- * Vertical funnel: 2,100 → 205 → 16 → 6.
- * Euclidean distance slider, FDR toggle, hypothesis cards.
- * Per briefing §3.3 Stage 3.
- *
- * Survival counts at various thresholds are pre-computed estimates.
- * Only the 0.03 threshold (205) is the paper's exact value.
+ * Upgraded with:
+ * - Recharts scatter plot of hypothesis embedding space
+ * - Effect size distribution chart
+ * - Interactive funnel with animated Recharts bars
+ * - Euclidean distance slider + FDR toggle
+ * - Pre-registered hypothesis cards
+ * Per briefing §3.3 Stage 3, upgraded for dynamism.
  */
 
 // Pre-computed survival counts at various Euclidean distance thresholds
-// Only threshold=0.03 → 205 is from the paper; others are illustrative interpolations.
 const SURVIVAL_COUNTS: [number, number][] = [
-  [0.01, 820],
-  [0.015, 580],
-  [0.02, 410],
-  [0.025, 290],
-  [0.03, 205],   // ← paper's actual value
-  [0.035, 155],
-  [0.04, 118],
-  [0.045, 90],
-  [0.05, 72],
-  [0.06, 48],
-  [0.07, 35],
-  [0.08, 28],
-  [0.09, 23],
-  [0.10, 19],
+  [0.01, 820], [0.015, 580], [0.02, 410], [0.025, 290],
+  [0.03, 205], [0.035, 155], [0.04, 118], [0.045, 90],
+  [0.05, 72], [0.06, 48], [0.07, 35], [0.08, 28],
+  [0.09, 23], [0.10, 19],
 ]
 
-// FDR-corrected significant counts (illustrative; 16 is paper's value at threshold=0.03)
 const FDR_CORRECTED_COUNTS: Record<string, { withFDR: number; withoutFDR: number }> = {
   '0.01': { withFDR: 38, withoutFDR: 95 },
   '0.015': { withFDR: 30, withoutFDR: 72 },
   '0.02': { withFDR: 24, withoutFDR: 55 },
   '0.025': { withFDR: 19, withoutFDR: 42 },
-  '0.03': { withFDR: 16, withoutFDR: 35 },  // ← paper's actual value
+  '0.03': { withFDR: 16, withoutFDR: 35 },
   '0.035': { withFDR: 13, withoutFDR: 28 },
   '0.04': { withFDR: 10, withoutFDR: 22 },
   '0.045': { withFDR: 8, withoutFDR: 18 },
@@ -65,31 +69,97 @@ function interpolateSurvival(threshold: number): number {
 }
 
 function getClosestFDR(threshold: number): { withFDR: number; withoutFDR: number } {
-  // Find the closest key in FDR_CORRECTED_COUNTS
   const keys = Object.keys(FDR_CORRECTED_COUNTS).map(Number).sort((a, b) => a - b)
   let closest = keys[0]
   let minDist = Math.abs(threshold - closest)
   for (const k of keys) {
     const dist = Math.abs(threshold - k)
-    if (dist < minDist) {
-      closest = k
-      minDist = dist
-    }
+    if (dist < minDist) { closest = k; minDist = dist }
   }
   return FDR_CORRECTED_COUNTS[closest.toString()] || FDR_CORRECTED_COUNTS['0.03']
 }
 
 type PreRegistered = (typeof hypothesesData.preRegistered)[number]
 
+// Stage colors
+const STAGE_COLORS: Record<string, string> = {
+  preregistered: '#537a3a',
+  significant: '#4a6fa5',
+  deduplicated: '#c4924a',
+}
+
 export default function StageFilter() {
   const [threshold, setThreshold] = useState(0.03)
   const [fdrEnabled, setFdrEnabled] = useState(true)
   const [expandedCard, setExpandedCard] = useState<string | null>(null)
-
+  const [activeViz, setActiveViz] = useState<'scatter' | 'distribution'>('scatter')
   const afterDedup = useMemo(() => interpolateSurvival(threshold), [threshold])
   const fdrCounts = useMemo(() => getClosestFDR(threshold), [threshold])
   const significant = fdrEnabled ? fdrCounts.withFDR : fdrCounts.withoutFDR
   const isDefaultThreshold = Math.abs(threshold - 0.03) < 0.001
+
+  // Scatter plot data — filter based on threshold
+  const scatterData = useMemo(() => {
+    // Scale threshold effect: at low thresholds, more points survive dedup
+    const thresholdNorm = (threshold - 0.01) / (0.10 - 0.01)
+    return embeddingData.hypotheses.map((h, i) => {
+      // Deterministic "survives" based on hypothesis index + threshold
+      // Uses a simple hash so dots don't randomly flicker when sliding
+      const hash = ((i * 2654435761) >>> 0) / 4294967296 // Knuth multiplicative hash → [0,1)
+      const survives = h.stage === 'preregistered' || h.stage === 'significant' ||
+        (h.stage === 'deduplicated' && hash > thresholdNorm * 0.3)
+
+      return {
+        ...h,
+        xScaled: h.x * 100,
+        yScaled: h.y * 100,
+        survives,
+        fill: STAGE_COLORS[h.stage] || '#c4924a',
+        size: h.stage === 'preregistered' ? 120 : h.stage === 'significant' ? 80 : 40,
+      }
+    })
+  }, [threshold])
+
+  // Distribution data
+  const distributionData = useMemo(() => {
+    return embeddingData.effectDistribution.map((d) => ({
+      bin: `${(d.bin * 100).toFixed(1)}%`,
+      binValue: d.bin * 100,
+      count: d.count,
+    }))
+  }, [])
+
+  const handleThresholdChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setThreshold(Number(e.target.value))
+  }, [])
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const ScatterTooltip = ({ active, payload }: any) => {
+    if (!active || !payload?.[0]) return null
+    const d = payload[0].payload
+    if (!d.label) return null
+    return (
+      <div className="bg-paper border border-paper-deep rounded-md px-3 py-2 shadow-md max-w-[200px]">
+        <p className="font-sans text-xs font-medium text-ink capitalize">{d.label}</p>
+        <p className={`font-mono text-xs ${d.effect >= 0 ? 'text-finding' : 'text-caveat'}`}>
+          effect: {d.effect >= 0 ? '+' : ''}{(d.effect * 100).toFixed(2)}%
+        </p>
+        <p className="font-sans text-[10px] text-ink-faint capitalize">{d.stage}</p>
+      </div>
+    )
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const DistTooltip = ({ active, payload }: any) => {
+    if (!active || !payload?.[0]) return null
+    const d = payload[0].payload
+    return (
+      <div className="bg-paper border border-paper-deep rounded-md px-3 py-2 shadow-md">
+        <p className="font-sans text-xs text-ink">∆CTR ≈ {d.bin}</p>
+        <p className="font-mono text-xs text-accent-deep">{d.count} hypotheses</p>
+      </div>
+    )
+  }
 
   return (
     <div className="lg:grid lg:grid-cols-[1fr_40%] lg:gap-6">
@@ -99,8 +169,142 @@ export default function StageFilter() {
         </h3>
         <p className="font-sans text-gloss text-ink-muted mb-6">
           The funnel narrows from 2,100 machine-generated hypotheses to 6 pre-registered ones.
-          Adjust the filtering parameters to see how the counts change.
+          Explore the hypothesis space and adjust filtering parameters.
         </p>
+
+        {/* Visualization toggle */}
+        <div className="flex gap-2 mb-4">
+          <button
+            onClick={() => setActiveViz('scatter')}
+            className={`px-3 py-1.5 font-sans text-xs rounded-md transition-colors ${
+              activeViz === 'scatter'
+                ? 'bg-accent/10 text-accent-deep font-medium border border-accent/30'
+                : 'text-ink-faint hover:text-ink-muted bg-paper-subtle border border-paper-deep'
+            }`}
+          >
+            Embedding space
+          </button>
+          <button
+            onClick={() => setActiveViz('distribution')}
+            className={`px-3 py-1.5 font-sans text-xs rounded-md transition-colors ${
+              activeViz === 'distribution'
+                ? 'bg-accent/10 text-accent-deep font-medium border border-accent/30'
+                : 'text-ink-faint hover:text-ink-muted bg-paper-subtle border border-paper-deep'
+            }`}
+          >
+            Effect distribution
+          </button>
+        </div>
+
+        {/* Scatter plot: Hypothesis embedding space */}
+        {activeViz === 'scatter' && (
+          <div className="bg-paper-subtle rounded-lg border border-paper-deep p-4 mb-6">
+            <h4 className="font-sans text-sm font-semibold text-ink mb-1">
+              Hypothesis embedding space
+            </h4>
+            <p className="font-sans text-xs text-ink-faint mb-3">
+              Each dot is a hypothesis, projected from 768-dim embeddings to 2D.
+              Hypotheses too close together get de-duplicated. Larger dots survived filtering.
+            </p>
+
+            <ResponsiveContainer width="100%" height={300}>
+              <ScatterChart margin={{ top: 10, right: 10, bottom: 10, left: 10 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#ede6d3" />
+                <XAxis
+                  type="number" dataKey="xScaled" domain={[0, 100]}
+                  tick={false} axisLine={{ stroke: '#ede6d3' }} label={{ value: 'Dimension 1', position: 'bottom', offset: -5, style: { fontSize: 10, fill: '#767676', fontFamily: 'DM Sans' } }}
+                />
+                <YAxis
+                  type="number" dataKey="yScaled" domain={[0, 100]}
+                  tick={false} axisLine={{ stroke: '#ede6d3' }} label={{ value: 'Dimension 2', angle: -90, position: 'left', offset: -5, style: { fontSize: 10, fill: '#767676', fontFamily: 'DM Sans' } }}
+                />
+                <ZAxis type="number" dataKey="size" range={[30, 200]} />
+                <Tooltip content={<ScatterTooltip />} cursor={false} />
+                {/* Deduplicated (background) — small, faint dots */}
+                <Scatter
+                  name="Deduplicated"
+                  data={scatterData.filter((d) => d.stage === 'deduplicated')}
+                  fill="#c4924a"
+                  fillOpacity={0.3}
+                  shape="circle"
+                />
+                {/* Significant — medium, visible dots */}
+                <Scatter
+                  name="Significant"
+                  data={scatterData.filter((d) => d.stage === 'significant')}
+                  fill="#4a6fa5"
+                  fillOpacity={0.7}
+                  shape="circle"
+                />
+                {/* Pre-registered — large, prominent dots */}
+                <Scatter
+                  name="Pre-registered"
+                  data={scatterData.filter((d) => d.stage === 'preregistered')}
+                  fill="#537a3a"
+                  fillOpacity={1}
+                  shape="diamond"
+                />
+              </ScatterChart>
+            </ResponsiveContainer>
+
+            {/* Legend */}
+            <div className="flex flex-wrap gap-4 mt-2">
+              <LegendItem color="#537a3a" size={10} label="Pre-registered (6)" />
+              <LegendItem color="#4a6fa5" size={8} label="Significant (16)" />
+              <LegendItem color="#c4924a" size={5} label="Deduplicated" opacity={0.4} />
+            </div>
+
+            <p className="font-sans text-[10px] text-ink-faint mt-2">
+              Positions are an illustrative 2D projection. The paper uses 768-dim MPNet embeddings.
+            </p>
+          </div>
+        )}
+
+        {/* Effect size distribution */}
+        {activeViz === 'distribution' && (
+          <div className="bg-paper-subtle rounded-lg border border-paper-deep p-4 mb-6">
+            <h4 className="font-sans text-sm font-semibold text-ink mb-1">
+              Distribution of predicted effects
+            </h4>
+            <p className="font-sans text-xs text-ink-faint mb-3">
+              Most hypotheses cluster around zero effect. The pipeline selects those with
+              significant positive effects after FDR correction.
+            </p>
+
+            <ResponsiveContainer width="100%" height={220}>
+              <BarChart data={distributionData} margin={{ top: 5, right: 10, bottom: 5, left: 10 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#ede6d3" vertical={false} />
+                <XAxis
+                  dataKey="bin"
+                  tick={{ fontSize: 10, fill: '#5a5a5a', fontFamily: 'JetBrains Mono, monospace' }}
+                  axisLine={{ stroke: '#ede6d3' }}
+                  tickLine={false}
+                  interval={1}
+                />
+                <YAxis
+                  tick={{ fontSize: 10, fill: '#767676' }}
+                  axisLine={false} tickLine={false}
+                  label={{ value: 'Hypotheses', angle: -90, position: 'insideLeft', offset: 0, style: { fontSize: 10, fill: '#767676', fontFamily: 'DM Sans' } }}
+                />
+                <Tooltip content={<DistTooltip />} cursor={{ fill: '#ede6d3', fillOpacity: 0.5 }} />
+                <ReferenceLine x="0.0%" stroke="#767676" strokeWidth={1} strokeDasharray="4 4" />
+                <Bar dataKey="count" radius={[3, 3, 0, 0]} barSize={24} animationDuration={800}>
+                  {distributionData.map((entry, index) => (
+                    <Cell
+                      key={index}
+                      fill={entry.binValue > 0 ? '#537a3a' : entry.binValue < 0 ? '#ad5633' : '#c4924a'}
+                      fillOpacity={0.7}
+                    />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+
+            <p className="font-sans text-[10px] text-ink-faint mt-2">
+              Illustrative distribution — bin counts are representative of the described pipeline.
+            </p>
+          </div>
+        )}
 
         {/* Euclidean distance slider */}
         <div className="bg-paper-subtle rounded-lg border border-paper-deep p-4 mb-6">
@@ -119,7 +323,7 @@ export default function StageFilter() {
             max={0.10}
             step={0.005}
             value={threshold}
-            onChange={(e) => setThreshold(Number(e.target.value))}
+            onChange={handleThresholdChange}
             className="w-full h-2 bg-paper-deep rounded-full appearance-none cursor-pointer
               [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4
               [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-accent [&::-webkit-slider-thumb]:shadow-sm
@@ -172,39 +376,13 @@ export default function StageFilter() {
 
         {/* Funnel visualization */}
         <div className="space-y-2 mb-6">
-          <FunnelBar
-            count={2100}
-            label="hypotheses generated"
-            maxCount={2100}
-            color="bg-method"
-            isFixed
-          />
-          <div className="pl-6 text-ink-faint text-xs">↓ de-duplication (distance &gt; {threshold.toFixed(2)})</div>
-          <FunnelBar
-            count={afterDedup}
-            label="after de-duplication"
-            maxCount={2100}
-            color="bg-method"
-            isExact={isDefaultThreshold}
-          />
-          <div className="pl-6 text-ink-faint text-xs">
-            ↓ {fdrEnabled ? 'FDR-corrected ' : ''}significance test
-          </div>
-          <FunnelBar
-            count={significant}
-            label={`with significant predicted effects${!fdrEnabled ? ' (no FDR)' : ''}`}
-            maxCount={2100}
-            color="bg-finding"
-            isExact={isDefaultThreshold && fdrEnabled}
-          />
-          <div className="pl-6 text-ink-faint text-xs">↓ pre-registration selection</div>
-          <FunnelBar
-            count={6}
-            label="pre-registered for testing"
-            maxCount={2100}
-            color="bg-finding"
-            isFixed
-          />
+          <FunnelBar count={2100} label="hypotheses generated" maxCount={2100} color="bg-method" isFixed />
+          <div className="pl-6 text-ink-faint text-xs">&darr; de-duplication (distance &gt; {threshold.toFixed(2)})</div>
+          <FunnelBar count={afterDedup} label="after de-duplication" maxCount={2100} color="bg-method" isExact={isDefaultThreshold} />
+          <div className="pl-6 text-ink-faint text-xs">&darr; {fdrEnabled ? 'FDR-corrected ' : ''}significance test</div>
+          <FunnelBar count={significant} label={`with significant predicted effects${!fdrEnabled ? ' (no FDR)' : ''}`} maxCount={2100} color="bg-finding" isExact={isDefaultThreshold && fdrEnabled} />
+          <div className="pl-6 text-ink-faint text-xs">&darr; pre-registration selection</div>
+          <FunnelBar count={6} label="pre-registered for testing" maxCount={2100} color="bg-finding" isFixed />
         </div>
 
         {/* Pre-registered hypothesis cards */}
@@ -250,7 +428,7 @@ export default function StageFilter() {
       {/* Right: Text rail */}
       <div className="mt-8 lg:mt-0">
         <div className="lg:hidden font-sans text-xs text-ink-faint uppercase tracking-wider mb-2">
-          The paper says…
+          The paper says&hellip;
         </div>
         <TextRail
           sectionRef="§2.3, ¶4 – §2.4, ¶1, p.3–4"
@@ -265,23 +443,24 @@ export default function StageFilter() {
   )
 }
 
+function LegendItem({ color, size, label, opacity = 1 }: { color: string; size: number; label: string; opacity?: number }) {
+  return (
+    <div className="flex items-center gap-1.5">
+      <span
+        className="inline-block rounded-full"
+        style={{ width: size, height: size, backgroundColor: color, opacity }}
+      />
+      <span className="font-sans text-[10px] text-ink-faint">{label}</span>
+    </div>
+  )
+}
+
 function FunnelBar({
-  count,
-  label,
-  maxCount,
-  color,
-  isFixed,
-  isExact,
+  count, label, maxCount, color, isFixed, isExact,
 }: {
-  count: number
-  label: string
-  maxCount: number
-  color: string
-  isFixed?: boolean
-  isExact?: boolean
+  count: number; label: string; maxCount: number; color: string; isFixed?: boolean; isExact?: boolean
 }) {
   const barWidth = Math.max((count / maxCount) * 100, 4)
-
   return (
     <div>
       <div className="flex items-baseline gap-3 mb-1">
@@ -290,9 +469,7 @@ function FunnelBar({
         </span>
         <span className="font-sans text-sm text-ink-muted">
           {label}
-          {!isFixed && !isExact && (
-            <span className="text-ink-faint text-[10px] ml-1">*</span>
-          )}
+          {!isFixed && !isExact && <span className="text-ink-faint text-[10px] ml-1">*</span>}
         </span>
       </div>
       <div className="ml-[4rem] pl-3">
@@ -308,23 +485,16 @@ function FunnelBar({
 }
 
 function HypothesisResultCard({
-  hypothesis,
-  isExpanded,
-  onToggle,
+  hypothesis, isExpanded, onToggle,
 }: {
-  hypothesis: PreRegistered
-  isExpanded: boolean
-  onToggle: () => void
+  hypothesis: PreRegistered; isExpanded: boolean; onToggle: () => void
 }) {
   const h = hypothesis
-  const hasCaveat =
-    h.shorthand === 'multimedia evidence' || h.shorthand === 'surprise, cliffhanger'
+  const hasCaveat = h.shorthand === 'multimedia evidence' || h.shorthand === 'surprise, cliffhanger'
 
   const study1Color = h.study1_significant ? 'text-finding' : 'text-ink-faint'
   const study2Color = h.study2_significant
-    ? h.study2_note?.includes('OPPOSITE')
-      ? 'text-caveat'
-      : 'text-finding'
+    ? h.study2_note?.includes('OPPOSITE') ? 'text-caveat' : 'text-finding'
     : 'text-ink-faint'
 
   return (
@@ -335,39 +505,29 @@ function HypothesisResultCard({
     >
       {hasCaveat && (
         <span className="inline-block font-sans text-[10px] font-medium px-2 py-0.5 rounded-full bg-caveat/10 text-caveat mb-1.5">
-          {h.shorthand === 'multimedia evidence'
-            ? 'opposite direction in Study 2'
-            : 'null in Study 2'}
+          {h.shorthand === 'multimedia evidence' ? 'opposite direction in Study 2' : 'null in Study 2'}
         </span>
       )}
 
-      <p className="font-sans text-xs font-semibold text-ink mb-1 capitalize">
-        {h.shorthand}
-      </p>
+      <p className="font-sans text-xs font-semibold text-ink mb-1 capitalize">{h.shorthand}</p>
 
-      <span
-        className={`inline-block text-[10px] font-sans px-1.5 py-0.5 rounded-full mb-2 ${
-          h.predictedDirection === 'positive'
-            ? 'bg-finding/10 text-finding'
-            : 'bg-caveat/10 text-caveat'
-        }`}
-      >
-        {h.predictedDirection === 'positive' ? '↑' : '↓'}
+      <span className={`inline-block text-[10px] font-sans px-1.5 py-0.5 rounded-full mb-2 ${
+        h.predictedDirection === 'positive' ? 'bg-finding/10 text-finding' : 'bg-caveat/10 text-caveat'
+      }`}>
+        {h.predictedDirection === 'positive' ? '\u2191' : '\u2193'}
       </span>
 
       <div className="flex gap-3 text-xs font-mono">
         <div>
           <span className="font-sans text-ink-faint block text-[10px]">S1</span>
           <span className={study1Color}>
-            {formatP(h.study1_p)}
-            {h.study1_significant ? ' ✓' : ''}
+            {formatP(h.study1_p)}{h.study1_significant ? ' \u2713' : ''}
           </span>
         </div>
         <div>
           <span className="font-sans text-ink-faint block text-[10px]">S2</span>
           <span className={study2Color}>
-            {h.study2_p ? formatP(h.study2_p) : '—'}
-            {h.study2_significant ? ' ✓' : ''}
+            {h.study2_p ? formatP(h.study2_p) : '\u2014'}{h.study2_significant ? ' \u2713' : ''}
           </span>
         </div>
       </div>
@@ -389,7 +549,7 @@ function HypothesisResultCard({
 }
 
 function formatP(p: number | string | null): string {
-  if (p === null) return '—'
+  if (p === null) return '\u2014'
   if (typeof p === 'string') return p
   return p.toFixed(3)
 }

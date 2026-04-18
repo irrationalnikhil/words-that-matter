@@ -44,10 +44,7 @@ export default function RSquaredChart() {
   const activeData = bars.find((b) => b.id === activeBar)
 
   return (
-    <div className="my-6 rounded-lg border border-paper-deep bg-paper-subtle p-5">
-      <h4 className="font-sans text-sm font-semibold text-ink mb-1">
-        Model comparison: R² jump
-      </h4>
+    <div>
       <p className="font-sans text-xs text-ink-faint mb-5">
         How much of the variation in ∆CTR does each model explain? Click a bar for details.
       </p>

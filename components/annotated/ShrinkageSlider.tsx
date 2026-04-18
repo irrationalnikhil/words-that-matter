@@ -58,10 +58,7 @@ export default function ShrinkageSlider() {
   }, [])
 
   return (
-    <div className="my-6 rounded-lg border border-paper-deep bg-paper-subtle p-5">
-      <h4 className="font-sans text-sm font-semibold text-ink mb-1">
-        Play with the shrinkage formula
-      </h4>
+    <div>
       <p className="font-sans text-xs text-ink-faint mb-5">
         Adjust clicks and impressions to see how the smoothed CTR is pulled toward the grand mean
         at low sample sizes.

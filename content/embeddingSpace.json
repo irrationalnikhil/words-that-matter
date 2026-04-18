@@ -1,0 +1,65 @@
+{
+  "_meta": {
+    "description": "Synthetic 2D projection of the hypothesis embedding space. The paper uses 768-dim MPNet embeddings with Euclidean distance for deduplication. These 2D positions are an illustrative t-SNE-like projection showing cluster structure, deduplication, and filtering. The 6 pre-registered hypotheses use their actual names.",
+    "source": "Synthetic illustration of the embedding structure described in §2.3",
+    "status": "illustrative — positions are synthetic, cluster structure is representative"
+  },
+  "hypotheses": [
+    { "id": "e-pr1", "x": 0.72, "y": 0.35, "label": "surprise + cliffhanger", "stage": "preregistered", "effect": 0.0052, "cluster": "tension" },
+    { "id": "e-pr2", "x": 0.68, "y": 0.42, "label": "parody", "stage": "preregistered", "effect": 0.0041, "cluster": "humor" },
+    { "id": "e-pr3", "x": 0.45, "y": 0.78, "label": "multimedia evidence", "stage": "preregistered", "effect": 0.0063, "cluster": "specificity" },
+    { "id": "e-pr4", "x": 0.31, "y": 0.55, "label": "physical reaction", "stage": "preregistered", "effect": 0.0058, "cluster": "embodiment" },
+    { "id": "e-pr5", "x": 0.82, "y": 0.68, "label": "short, simple phrases", "stage": "preregistered", "effect": -0.0045, "cluster": "structure" },
+    { "id": "e-pr6", "x": 0.55, "y": 0.22, "label": "positive human behavior", "stage": "preregistered", "effect": -0.0067, "cluster": "valence" },
+
+    { "id": "e-s1", "x": 0.15, "y": 0.32, "label": "geographic reference", "stage": "significant", "effect": 0.0038, "cluster": "specificity" },
+    { "id": "e-s2", "x": 0.38, "y": 0.88, "label": "temporal urgency", "stage": "significant", "effect": 0.0044, "cluster": "tension" },
+    { "id": "e-s3", "x": 0.88, "y": 0.52, "label": "celebrity involvement", "stage": "significant", "effect": 0.0036, "cluster": "authority" },
+    { "id": "e-s4", "x": 0.22, "y": 0.75, "label": "moral outrage", "stage": "significant", "effect": 0.0055, "cluster": "emotion" },
+    { "id": "e-s5", "x": 0.65, "y": 0.15, "label": "self-deprecation", "stage": "significant", "effect": 0.0033, "cluster": "humor" },
+    { "id": "e-s6", "x": 0.48, "y": 0.48, "label": "contrast framing", "stage": "significant", "effect": 0.0047, "cluster": "structure" },
+    { "id": "e-s7", "x": 0.12, "y": 0.58, "label": "numerical specificity", "stage": "significant", "effect": 0.0042, "cluster": "specificity" },
+    { "id": "e-s8", "x": 0.78, "y": 0.82, "label": "social proof", "stage": "significant", "effect": 0.0039, "cluster": "authority" },
+    { "id": "e-s9", "x": 0.35, "y": 0.18, "label": "absurdity", "stage": "significant", "effect": 0.0051, "cluster": "humor" },
+    { "id": "e-s10", "x": 0.92, "y": 0.38, "label": "loss framing", "stage": "significant", "effect": 0.0046, "cluster": "valence" },
+
+    { "id": "e-d1", "x": 0.71, "y": 0.36, "label": "", "stage": "deduplicated", "effect": 0.0028, "cluster": "tension" },
+    { "id": "e-d2", "x": 0.33, "y": 0.56, "label": "", "stage": "deduplicated", "effect": 0.0019, "cluster": "embodiment" },
+    { "id": "e-d3", "x": 0.56, "y": 0.21, "label": "", "stage": "deduplicated", "effect": 0.0015, "cluster": "valence" },
+    { "id": "e-d4", "x": 0.44, "y": 0.79, "label": "", "stage": "deduplicated", "effect": 0.0022, "cluster": "specificity" },
+    { "id": "e-d5", "x": 0.81, "y": 0.69, "label": "", "stage": "deduplicated", "effect": -0.0012, "cluster": "structure" },
+    { "id": "e-d6", "x": 0.18, "y": 0.42, "label": "", "stage": "deduplicated", "effect": 0.0008, "cluster": "specificity" },
+    { "id": "e-d7", "x": 0.62, "y": 0.58, "label": "", "stage": "deduplicated", "effect": 0.0031, "cluster": "tension" },
+    { "id": "e-d8", "x": 0.28, "y": 0.82, "label": "", "stage": "deduplicated", "effect": 0.0014, "cluster": "emotion" },
+    { "id": "e-d9", "x": 0.75, "y": 0.48, "label": "", "stage": "deduplicated", "effect": 0.0026, "cluster": "authority" },
+    { "id": "e-d10", "x": 0.42, "y": 0.35, "label": "", "stage": "deduplicated", "effect": 0.0017, "cluster": "structure" },
+    { "id": "e-d11", "x": 0.58, "y": 0.72, "label": "", "stage": "deduplicated", "effect": 0.0023, "cluster": "emotion" },
+    { "id": "e-d12", "x": 0.85, "y": 0.25, "label": "", "stage": "deduplicated", "effect": 0.0009, "cluster": "humor" },
+    { "id": "e-d13", "x": 0.25, "y": 0.65, "label": "", "stage": "deduplicated", "effect": 0.0035, "cluster": "embodiment" },
+    { "id": "e-d14", "x": 0.52, "y": 0.42, "label": "", "stage": "deduplicated", "effect": 0.0021, "cluster": "structure" },
+    { "id": "e-d15", "x": 0.38, "y": 0.28, "label": "", "stage": "deduplicated", "effect": 0.0016, "cluster": "valence" }
+  ],
+  "clusters": [
+    { "id": "tension", "label": "Tension & Curiosity", "color": "#c4924a", "cx": 0.65, "cy": 0.40 },
+    { "id": "humor", "label": "Humor & Irony", "color": "#7f5fa3", "cx": 0.55, "cy": 0.20 },
+    { "id": "specificity", "label": "Specificity & Evidence", "color": "#4a6fa5", "cx": 0.30, "cy": 0.72 },
+    { "id": "embodiment", "label": "Physical & Sensory", "color": "#537a3a", "cx": 0.28, "cy": 0.55 },
+    { "id": "structure", "label": "Structural Features", "color": "#ad5633", "cx": 0.70, "cy": 0.65 },
+    { "id": "valence", "label": "Emotional Valence", "color": "#5a7a8a", "cx": 0.55, "cy": 0.25 },
+    { "id": "emotion", "label": "Emotional Appeal", "color": "#8a5a5a", "cx": 0.35, "cy": 0.80 },
+    { "id": "authority", "label": "Authority & Proof", "color": "#6a7a4a", "cx": 0.82, "cy": 0.55 }
+  ],
+  "effectDistribution": [
+    { "bin": -0.008, "count": 15 },
+    { "bin": -0.006, "count": 35 },
+    { "bin": -0.004, "count": 85 },
+    { "bin": -0.002, "count": 180 },
+    { "bin": 0.000, "count": 420 },
+    { "bin": 0.002, "count": 520 },
+    { "bin": 0.004, "count": 380 },
+    { "bin": 0.006, "count": 250 },
+    { "bin": 0.008, "count": 140 },
+    { "bin": 0.010, "count": 55 },
+    { "bin": 0.012, "count": 20 }
+  ]
+}

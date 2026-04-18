@@ -1,6 +1,17 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ReferenceLine,
+  ResponsiveContainer,
+  Cell,
+} from 'recharts'
 import morphsData from '@/content/morphs.json'
 import TextRail from './TextRail'
 
@@ -8,10 +19,10 @@ const morphExamples = morphsData.examples
 
 /**
  * Stage 2 — Rank (Morph & Score).
+ * Upgraded with Recharts bar chart that builds as morphs are revealed.
  * Shows hypothesis carried forward from Stage 1.
- * Displays headlines with "Morph" buttons that reveal actual morphs from Table 2.
- * Each morph shows predicted ∆CTR bar. Summary score at bottom.
- * Per briefing §3.3 Stage 2.
+ * Each morph has "Morph →" reveal + Recharts delta bar chart.
+ * Per briefing §3.3 Stage 2, upgraded for dynamism.
  *
  * Predicted ∆CTR values are illustrative — the paper does not publish
  * individual morph-level predictions. Values are within the paper's reported ranges.
@@ -27,6 +38,16 @@ const ILLUSTRATIVE_DELTA_CTR: Record<string, number> = {
   'm-6': 0.0073,
 }
 
+// Short labels for chart
+const SHORT_LABELS: Record<string, string> = {
+  'm-1': 'Emotional trigger',
+  'm-2': 'Personal story',
+  'm-3': 'Sensationalism',
+  'm-4': 'Narrative arc',
+  'm-5': 'Mystery',
+  'm-6': 'Surprise',
+}
+
 interface StageRankProps {
   selectedHypothesis?: string
 }
@@ -34,6 +55,7 @@ interface StageRankProps {
 export default function StageRank({ selectedHypothesis }: StageRankProps) {
   const [revealedMorphs, setRevealedMorphs] = useState<Set<string>>(new Set())
   const [activeMorphSet, setActiveMorphSet] = useState(0)
+  const [hoveredMorph, setHoveredMorph] = useState<string | null>(null)
 
   // Show 4 morphs at a time, cycling through sets
   const morphSets = [
@@ -51,14 +73,36 @@ export default function StageRank({ selectedHypothesis }: StageRankProps) {
     })
   }
 
-  // Calculate summary score from revealed morphs
-  const revealedDeltas = currentMorphs
-    .filter((m) => revealedMorphs.has(m.id))
-    .map((m) => ILLUSTRATIVE_DELTA_CTR[m.id] || 0)
-  const avgDelta =
-    revealedDeltas.length > 0
-      ? revealedDeltas.reduce((a, b) => a + b, 0) / revealedDeltas.length
-      : null
+  // Chart data from revealed morphs
+  const chartData = useMemo(() => {
+    return currentMorphs
+      .filter((m) => revealedMorphs.has(m.id))
+      .map((m) => ({
+        id: m.id,
+        name: SHORT_LABELS[m.id] || m.id,
+        delta: (ILLUSTRATIVE_DELTA_CTR[m.id] || 0) * 100,
+        rawDelta: ILLUSTRATIVE_DELTA_CTR[m.id] || 0,
+      }))
+  }, [currentMorphs, revealedMorphs])
+
+  const avgDelta = useMemo(() => {
+    if (chartData.length === 0) return null
+    return chartData.reduce((sum, d) => sum + d.rawDelta, 0) / chartData.length
+  }, [chartData])
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const CustomTooltip = ({ active, payload }: any) => {
+    if (!active || !payload?.[0]) return null
+    const data = payload[0].payload
+    return (
+      <div className="bg-paper border border-paper-deep rounded-md px-3 py-2 shadow-md">
+        <p className="font-sans text-xs font-medium text-ink">{data.name}</p>
+        <p className={`font-mono text-sm font-bold ${data.delta >= 0 ? 'text-finding' : 'text-caveat'}`}>
+          {data.delta >= 0 ? '+' : ''}{data.delta.toFixed(2)}% CTR
+        </p>
+      </div>
+    )
+  }
 
   return (
     <div className="lg:grid lg:grid-cols-[1fr_40%] lg:gap-6">
@@ -69,6 +113,7 @@ export default function StageRank({ selectedHypothesis }: StageRankProps) {
         <p className="font-sans text-gloss text-ink-muted mb-6">
           Each hypothesis is tested by &ldquo;morphing&rdquo; headlines — rewriting them to
           incorporate the hypothesized feature — then predicting the CTR change.
+          Reveal morphs below to build the effect chart.
         </p>
 
         {/* Carried-forward hypothesis */}
@@ -98,7 +143,7 @@ export default function StageRank({ selectedHypothesis }: StageRankProps) {
                   : 'text-ink-faint hover:text-ink-muted bg-paper-subtle'
               }`}
             >
-              Headlines {i * 2 + 1}–{Math.min((i + 1) * 2 + 2, morphExamples.length)}
+              Headlines {i * 2 + 1}&ndash;{Math.min((i + 1) * 2 + 2, morphExamples.length)}
             </button>
           ))}
         </div>
@@ -108,11 +153,16 @@ export default function StageRank({ selectedHypothesis }: StageRankProps) {
           {currentMorphs.map((morph) => {
             const isRevealed = revealedMorphs.has(morph.id)
             const delta = ILLUSTRATIVE_DELTA_CTR[morph.id] || 0
+            const isHovered = hoveredMorph === morph.id
 
             return (
               <div
                 key={morph.id}
-                className="rounded-lg border border-paper-deep bg-paper p-4"
+                className={`rounded-lg border bg-paper p-4 transition-all duration-200 ${
+                  isHovered ? 'border-accent/50 shadow-sm' : 'border-paper-deep'
+                }`}
+                onMouseEnter={() => setHoveredMorph(morph.id)}
+                onMouseLeave={() => setHoveredMorph(null)}
               >
                 {/* Original headline */}
                 <div className="mb-3">
@@ -130,11 +180,11 @@ export default function StageRank({ selectedHypothesis }: StageRankProps) {
                     onClick={() => toggleMorph(morph.id)}
                     className="px-4 py-2 bg-accent text-ink font-sans text-sm font-medium rounded-md hover:bg-accent-deep transition-colors focus:outline-none focus:ring-2 focus:ring-accent/30"
                   >
-                    Morph →
+                    Morph &rarr;
                   </button>
                 ) : (
                   <div className="animate-in">
-                    {/* Morphed headline */}
+                    {/* Morphed headline with diff-style highlight */}
                     <div className="bg-finding/5 border border-finding/15 rounded-md p-3 mb-3">
                       <span className="font-sans text-[10px] text-ink-faint uppercase tracking-wider block mb-1">
                         Morphed headline
@@ -147,39 +197,23 @@ export default function StageRank({ selectedHypothesis }: StageRankProps) {
                       </p>
                     </div>
 
-                    {/* Predicted ∆CTR bar */}
+                    {/* Inline delta indicator */}
                     <div className="flex items-center gap-3">
                       <span className="font-sans text-xs text-ink-faint whitespace-nowrap">
                         Predicted ∆CTR
                       </span>
-                      <div className="flex-1 h-5 bg-paper-deep rounded-full overflow-hidden relative">
-                        {/* Center line at 0 */}
-                        <div className="absolute inset-y-0 left-1/2 w-px bg-ink-faint/30" />
-                        {/* Delta bar */}
-                        <div
-                          className={`absolute top-0.5 bottom-0.5 rounded-full transition-all duration-500 ${
-                            delta >= 0 ? 'bg-finding' : 'bg-caveat'
-                          }`}
-                          style={{
-                            left: delta >= 0 ? '50%' : `${50 + delta * 5000}%`,
-                            width: `${Math.abs(delta) * 5000}%`,
-                            maxWidth: '48%',
-                          }}
-                        />
-                      </div>
                       <span
-                        className={`font-mono text-xs tabular-nums font-semibold ${
+                        className={`font-mono text-sm tabular-nums font-bold ${
                           delta >= 0 ? 'text-finding' : 'text-caveat'
                         }`}
                       >
                         {delta >= 0 ? '+' : ''}
                         {(delta * 100).toFixed(2)}%
                       </span>
+                      <span className="font-sans text-[10px] text-ink-faint">
+                        ({SHORT_LABELS[morph.id]})
+                      </span>
                     </div>
-
-                    <p className="font-sans text-[10px] text-ink-faint mt-1">
-                      From {morph.source}. ∆CTR is illustrative — within the paper&apos;s reported range.
-                    </p>
                   </div>
                 )}
               </div>
@@ -187,24 +221,72 @@ export default function StageRank({ selectedHypothesis }: StageRankProps) {
           })}
         </div>
 
-        {/* Summary score */}
-        {avgDelta !== null && (
-          <div className="bg-paper-subtle rounded-lg border border-paper-deep p-4 mb-4 animate-in">
-            <p className="font-sans text-[10px] text-ink-faint uppercase tracking-wider mb-1">
-              Hypothesis-level score ({revealedDeltas.length} morphs)
+        {/* Recharts effect comparison — builds as morphs are revealed */}
+        {chartData.length > 0 && (
+          <div className="bg-paper-subtle rounded-lg border border-paper-deep p-4 mb-6 animate-in">
+            <h4 className="font-sans text-sm font-semibold text-ink mb-1">
+              Effect comparison
+            </h4>
+            <p className="font-sans text-xs text-ink-faint mb-4">
+              Predicted ∆CTR for each revealed morph. Reveal more morphs to build the chart.
             </p>
-            <div className="flex items-center gap-4">
-              <span
-                className={`font-mono text-xl font-bold tabular-nums ${
-                  avgDelta >= 0 ? 'text-finding' : 'text-caveat'
-                }`}
+
+            <ResponsiveContainer width="100%" height={Math.max(120, chartData.length * 50 + 40)}>
+              <BarChart
+                data={chartData}
+                layout="vertical"
+                margin={{ top: 5, right: 40, left: 10, bottom: 5 }}
               >
-                avg ∆CTR: {avgDelta >= 0 ? '+' : ''}{(avgDelta * 100).toFixed(3)}%
-              </span>
-            </div>
-            <p className="font-sans text-xs text-ink-faint mt-2">
-              By applying the hypothesis to many different headlines and predicting its effect,
-              we get a sense of how generalizable it is. This aggregate is illustrative.
+                <CartesianGrid strokeDasharray="3 3" stroke="#ede6d3" horizontal={false} />
+                <XAxis
+                  type="number"
+                  domain={[-0.5, 1]}
+                  tickFormatter={(v: number) => `${v >= 0 ? '+' : ''}${v.toFixed(1)}%`}
+                  tick={{ fontSize: 11, fill: '#5a5a5a', fontFamily: 'JetBrains Mono, monospace' }}
+                  axisLine={{ stroke: '#ede6d3' }}
+                  tickLine={false}
+                />
+                <YAxis
+                  type="category"
+                  dataKey="name"
+                  width={100}
+                  tick={{ fontSize: 11, fill: '#5a5a5a', fontFamily: 'DM Sans, sans-serif' }}
+                  axisLine={false}
+                  tickLine={false}
+                />
+                <Tooltip content={<CustomTooltip />} cursor={false} />
+                <ReferenceLine x={0} stroke="#767676" strokeWidth={1} />
+                <Bar dataKey="delta" radius={[0, 4, 4, 0]} barSize={20} animationDuration={600}>
+                  {chartData.map((entry) => (
+                    <Cell
+                      key={entry.id}
+                      fill={entry.delta >= 0 ? '#537a3a' : '#ad5633'}
+                      fillOpacity={0.8}
+                    />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+
+            {/* Aggregate score */}
+            {avgDelta !== null && (
+              <div className="mt-3 pt-3 border-t border-paper-deep flex items-center gap-3">
+                <span className="font-sans text-xs text-ink-faint">Hypothesis-level score:</span>
+                <span
+                  className={`font-mono text-base font-bold tabular-nums ${
+                    avgDelta >= 0 ? 'text-finding' : 'text-caveat'
+                  }`}
+                >
+                  avg ∆CTR: {avgDelta >= 0 ? '+' : ''}{(avgDelta * 100).toFixed(3)}%
+                </span>
+                <span className="font-sans text-[10px] text-ink-faint">
+                  ({chartData.length} morph{chartData.length !== 1 ? 's' : ''})
+                </span>
+              </div>
+            )}
+
+            <p className="font-sans text-[10px] text-ink-faint mt-2">
+              ∆CTR values are illustrative — within the paper&apos;s reported range.
             </p>
           </div>
         )}
@@ -224,7 +306,7 @@ export default function StageRank({ selectedHypothesis }: StageRankProps) {
       {/* Right: Text rail */}
       <div className="mt-8 lg:mt-0">
         <div className="lg:hidden font-sans text-xs text-ink-faint uppercase tracking-wider mb-2">
-          The paper says…
+          The paper says&hellip;
         </div>
         <TextRail
           sectionRef="§2.3, ¶3, p.3"

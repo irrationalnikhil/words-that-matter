@@ -3,6 +3,7 @@
 import { lazy, Suspense } from 'react'
 import { type Section, type Paragraph, type Category, type Glossary } from '@/lib/types'
 import KaTeXBlock from '@/components/shared/KaTeXBlock'
+import DeepDive from '@/components/shared/DeepDive'
 import { renderMiniMarkdown } from '@/lib/renderMiniMarkdown'
 import { renderTextWithTerms } from '@/lib/renderTextWithTerms'
 
@@ -27,16 +28,30 @@ const interactiveAfterSection: Record<string, React.ReactNode> = {
 }
 
 // Map of paragraph IDs to interactives placed after that paragraph (more precise than section-level)
+// Preprocessing details (shrinkage, R² comparison) are wrapped in DeepDive — collapsed by default.
+// These are "open a box" moments, not core insights. The reader chooses to explore them.
 const interactiveAfterParagraph: Record<string, React.ReactNode> = {
   'p-2.1-2': (
-    <Suspense fallback={<InteractiveLoading />}>
-      <ShrinkageSlider />
-    </Suspense>
+    <DeepDive
+      teaser="Play with the shrinkage formula"
+      sublabel="See how sample size affects CTR estimates — Eq. 1"
+      category="method"
+    >
+      <Suspense fallback={<InteractiveLoading />}>
+        <ShrinkageSlider />
+      </Suspense>
+    </DeepDive>
   ),
   'p-2.2-4': (
-    <Suspense fallback={<InteractiveLoading />}>
-      <RSquaredChart />
-    </Suspense>
+    <DeepDive
+      teaser="Compare model performance"
+      sublabel="BU model vs ML model — R² comparison"
+      category="finding"
+    >
+      <Suspense fallback={<InteractiveLoading />}>
+        <RSquaredChart />
+      </Suspense>
+    </DeepDive>
   ),
 }
 

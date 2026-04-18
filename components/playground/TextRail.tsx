@@ -18,7 +18,7 @@ export default function TextRail({ sectionRef, paragraphs, note }: TextRailProps
     <aside className="lg:sticky lg:top-24 lg:self-start">
       <div className="bg-paper-subtle rounded-lg p-5 border border-paper-deep">
         {/* Rail header */}
-        <p className="font-sans text-[13px] text-ink-faint mb-1">From the paper</p>
+        <p className="font-sans text-[13px] text-ink-faint mb-1">From the paper (verbatim)</p>
         <p className="font-sans text-xs text-ink-faint mb-3">{sectionRef}</p>
 
         {/* Verbatim paragraphs */}

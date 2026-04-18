@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=DM+Sans:wght@400;500&amp;display=swap');
+    </style>
+  </defs>
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#faf8f3"/>
+  <!-- Subtle border -->
+  <rect x="40" y="40" width="1120" height="550" rx="16" fill="none" stroke="#ede6d3" stroke-width="2"/>
+  <!-- Accent bar at top -->
+  <rect x="40" y="40" width="1120" height="6" rx="3" fill="#c4924a"/>
+  <!-- Title -->
+  <text x="600" y="240" text-anchor="middle" font-family="'DM Serif Display', Georgia, serif" font-size="72" fill="#1a1a1a">Words that Work</text>
+  <!-- Subtitle -->
+  <text x="600" y="310" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="28" fill="#5a5a5a">Interactive Paper Reader</text>
+  <!-- Author line -->
+  <text x="600" y="380" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="22" fill="#767676">Batista &amp; Ross · NeurIPS 2024</text>
+  <!-- Decorative dots (pipeline metaphor) -->
+  <g transform="translate(600, 460)" fill="none" stroke-width="2">
+    <circle cx="-200" cy="0" r="8" fill="#4a6fa5"/>
+    <line x1="-188" y1="0" x2="-112" y2="0" stroke="#ede6d3" stroke-dasharray="4,4"/>
+    <circle cx="-100" cy="0" r="8" fill="#537a3a"/>
+    <line x1="-88" y1="0" x2="-12" y2="0" stroke="#ede6d3" stroke-dasharray="4,4"/>
+    <circle cx="0" cy="0" r="8" fill="#c4924a"/>
+    <line x1="12" y1="0" x2="88" y2="0" stroke="#ede6d3" stroke-dasharray="4,4"/>
+    <circle cx="100" cy="0" r="8" fill="#ad5633"/>
+    <line x1="112" y1="0" x2="188" y2="0" stroke="#ede6d3" stroke-dasharray="4,4"/>
+    <circle cx="200" cy="0" r="8" fill="#7f5fa3"/>
+  </g>
+  <!-- Pipeline stage labels -->
+  <g font-family="'DM Sans', system-ui, sans-serif" font-size="12" fill="#767676" text-anchor="middle">
+    <text x="400" y="490">Data</text>
+    <text x="500" y="490">Model</text>
+    <text x="600" y="490">Generate</text>
+    <text x="700" y="490">Rank</text>
+    <text x="800" y="490">Filter</text>
+  </g>
+</svg>

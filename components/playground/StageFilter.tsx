@@ -232,10 +232,10 @@ export default function StageFilter() {
             caveat
           </span>
           <p className="font-sans text-xs text-ink-muted leading-relaxed">
-            This paper shows 2 of 6 hypotheses survived the novelty check (controlling for BU
-            features). Most did not. The authors treat this honestly in §5 — &ldquo;the ML
-            model may be capturing meaningful language patterns that simply correlate with
-            existing constructs.&rdquo;
+            When controlling for 51 existing psychological constructs, only 2 of 6 features
+            showed significant incremental effects (§2.4). The authors note in §5
+            that &ldquo;one could argue that these features appear similar to insights
+            already known.&rdquo;
           </p>
         </div>
 
@@ -253,12 +253,12 @@ export default function StageFilter() {
           The paper says…
         </div>
         <TextRail
-          sectionRef="§2.3–2.4, p.3–4"
+          sectionRef="§2.3, ¶4 – §2.4, ¶1, p.3–4"
           paragraphs={[
-            'We filtered out hypotheses that were semantically similar using MPNet sentence embeddings and Euclidean distance. After de-duplication and FDR correction, 16 hypotheses had significant predicted positive effects.',
-            'We pre-registered six hypotheses — four with predicted positive effects and two with predicted negative effects — before testing them on the lockbox data and the social media dataset.',
+            'Working from highest to lowest scores, we selected hypotheses that had a Euclidean distance greater than 0.03 from previously selected hypotheses. Finally, we tested whether the predicted treatment effects of the remaining 205 hypotheses were significantly different from 0 (after applying a correction to control for false discovery rates). Sixteen hypotheses had significant, positive predicted effects (p<.05).',
+            'To test our hypotheses — and assuage any concerns of overfitting or p-hacking — we pre-registered the six hypotheses and conducted all of our tests out of sample, on data that was intentionally left untouched in all the preceding steps.',
           ]}
-          note="This paper shows 2 of 6 hypotheses survived the novelty check (controlling for BU features). Most did not. The authors treat this honestly in §5."
+          note="2 of 6 hypotheses survived the novelty check (controlling for BU features). Most did not. The authors treat this honestly in §5."
         />
       </div>
     </div>

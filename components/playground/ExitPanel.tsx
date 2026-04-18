@@ -27,14 +27,17 @@ export default function ExitPanel() {
           </p>
           <p className="font-sans text-gloss md:text-gloss-desktop text-ink-muted leading-relaxed">
             The 6 hypotheses you saw at the bottom are the ones the authors pre-registered and
-            tested in two independent studies. Four produced significant effects in the first
-            study; two of those also survived a novelty check showing they capture something
-            beyond existing psychological constructs.
+            tested in two independent studies. Four were statistically significant in Study 1
+            (p &lt; .05). In a separate novelty check — controlling for 51 existing psychological
+            constructs — two features (surprise/cliffhanger and multimedia) showed significant
+            incremental effects (p &lt; .001), suggesting they capture something new.
           </p>
           <p className="font-sans text-gloss md:text-gloss-desktop text-ink-muted leading-relaxed">
-            That&apos;s a mixed result, and the authors are upfront about it. The pipeline
-            generates testable hypotheses — but most of what it finds may overlap with what
-            researchers already know. Read the limitations below.
+            That&apos;s a mixed result, and the authors are upfront about it: one of those
+            novel features wasn&apos;t even significant on its own, and the other flipped
+            direction in Study 2. The pipeline generates testable hypotheses — but most of
+            what it finds may overlap with what researchers already know. Read the
+            limitations below.
           </p>
         </div>
 

@@ -58,12 +58,10 @@ export default function TabSwitcher() {
         {/* Right-side actions */}
         <div className="flex items-center gap-3">
           <a
-            href="https://tally.so/r/words-that-work-feedback"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#sm-about"
             className="hidden md:inline-flex font-sans text-sm text-ink-muted hover:text-accent-deep transition-colors"
           >
-            Give feedback
+            Reviewer questions
           </a>
           <SourceDropdown />
         </div>

@@ -10,8 +10,8 @@ const funnelStages = [
     description:
       'GPT-4 generated hypotheses from headline pairs using 288 prompt configurations (9 preambles × 8 structures × 4 variations).',
     quote:
-      '"We generated approximately 2,100 hypotheses by prompting GPT-4 with pairs of headlines from Upworthy A/B tests."',
-    quoteRef: '§2.3, p.3',
+      '"This step produced 2,100 interpretable hypotheses (which human raters, n = 79, also believed to be good quality)."',
+    quoteRef: '§2.3, ¶2, p.3',
     color: 'bg-method',
   },
   {
@@ -19,8 +19,8 @@ const funnelStages = [
     label: 'after de-duplication',
     description: `Hypotheses with embedding distance < ${hypothesesData.funnelCounts.dedupThreshold} were merged as near-duplicates using sentence embeddings (MPNet).`,
     quote:
-      '"We filtered out hypotheses that were semantically similar using MPNet sentence embeddings and Euclidean distance."',
-    quoteRef: '§2.3, p.3',
+      '"Working from highest to lowest scores, we selected hypotheses that had a Euclidean distance greater than 0.03 from previously selected hypotheses."',
+    quoteRef: '§2.3, ¶4, p.3',
     color: 'bg-method',
   },
   {
@@ -29,8 +29,8 @@ const funnelStages = [
     description:
       'After applying Benjamini-Hochberg FDR correction to control for multiple testing, only 16 hypotheses had predicted effects significantly different from zero.',
     quote:
-      '"We identified hypotheses with statistically significant predicted effects after correcting for multiple comparisons."',
-    quoteRef: '§2.3, p.3',
+      '"We tested whether the predicted treatment effects of the remaining 205 hypotheses were significantly different from 0 (after applying a correction to control for false discovery rates). Sixteen hypotheses had significant, positive predicted effects (p<.05)."',
+    quoteRef: '§2.3, ¶4, p.3',
     color: 'bg-finding',
   },
   {
@@ -39,8 +39,8 @@ const funnelStages = [
     description:
       '4 hypotheses predicted to increase engagement + 2 predicted to decrease it. These were pre-registered at AsPredicted before looking at the test data.',
     quote:
-      '"We pre-registered six hypotheses... four with predicted positive effects and two with predicted negative effects."',
-    quoteRef: '§2.4, p.4',
+      '"We pre-registered the six hypotheses and conducted all of our tests out of sample, on data that was intentionally left untouched in all the preceding steps for generating the hypotheses."',
+    quoteRef: '§2.4, ¶1, p.3',
     color: 'bg-finding',
   },
 ]

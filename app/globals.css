@@ -69,11 +69,23 @@
     padding-right: 1.25rem;
   }
 
+  /* Touch targets: ≥44px minimum for range inputs (WCAG 2.2 AA) */
+  input[type="range"] {
+    min-height: 44px;
+    cursor: pointer;
+  }
+
+  /* Toggle switch touch target */
+  [role="switch"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
   /* Semantic left-border accent */
   .border-accent-method  { border-left: 3px solid #4a6fa5; }
-  .border-accent-finding { border-left: 3px solid #6b8e4e; }
-  .border-accent-caveat  { border-left: 3px solid #b85c38; }
-  .border-accent-novel   { border-left: 3px solid #8b6bb1; }
+  .border-accent-finding { border-left: 3px solid #537a3a; }
+  .border-accent-caveat  { border-left: 3px solid #ad5633; }
+  .border-accent-novel   { border-left: 3px solid #7f5fa3; }
 
   /* Annotated edition layout: reading column on mobile, wider on desktop for margin rail */
   .annotated-layout {

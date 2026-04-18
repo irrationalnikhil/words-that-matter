@@ -136,17 +136,17 @@ function formatP(p: number | string | null): string {
 function getGloss(h: PreRegistered): string {
   const glossMap: Record<string, string> = {
     'surprise, cliffhanger':
-      'Headlines that tease an unexpected outcome or leave something unresolved. Predicted to increase clicks, but the effect was not significant in either study.',
+      'Headlines that tease an unexpected outcome or leave something unresolved. Not significant in either study on its own, but passed the novelty check (p < .001) — it captures something distinct from the 51 existing psychological constructs.',
     'parody':
-      'Headlines that use humor or imitation for satirical effect. Predicted to increase clicks, but the effect was marginal in Study 1 and not significant in Study 2.',
+      'Headlines that use humor or imitation for satirical effect. Predicted to increase clicks, but the effect was marginal in Study 1 (p = .094) and not significant in Study 2.',
     'multimedia evidence':
-      'Headlines that reference video, photo, or audio evidence. Significant in both studies, but the direction flipped — positive in Study 1, negative in Study 2.',
+      'Headlines that reference video, photo, or audio evidence. Significant in both studies, but the direction flipped — positive in Study 1, negative in Study 2. Passed the novelty check (p < .001).',
     'physical reaction':
       'Headlines that describe bodily responses (gasps, tears, goosebumps). Significant and consistent across both studies — the strongest positive finding.',
     'short, simple phrases':
       'Headlines using shorter, plainer language. Predicted to decrease engagement, and this was confirmed in both studies.',
     'positive human behavior':
-      'Headlines focusing on people doing good things. Predicted to decrease engagement — confirmed in both studies. One of the novel findings.',
+      'Headlines focusing on people doing good things. Predicted to decrease engagement — confirmed in both studies.',
   }
   return glossMap[h.shorthand] || h.hypothesis
 }

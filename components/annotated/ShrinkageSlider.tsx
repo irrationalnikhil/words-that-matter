@@ -196,6 +196,8 @@ function SliderRow({
           focus:outline-none focus:ring-2 focus:ring-accent/30 focus:ring-offset-2 focus:ring-offset-paper-subtle"
         aria-label={ariaLabel}
         aria-valuenow={value}
+        aria-valuemin={0}
+        aria-valuemax={1}
       />
     </div>
   )

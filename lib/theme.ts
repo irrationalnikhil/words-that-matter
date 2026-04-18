@@ -10,11 +10,12 @@ export const colors = {
   inkMuted:     '#5a5a5a',  // secondary text, citations
   inkFaint:     '#767676',  // metadata, page numbers (darkened from #8a8a8a for WCAG AA 4.5:1)
 
-  // Semantic (left-border accents, small pills — never text highlights)
-  method:       '#4a6fa5',  // process, pipeline, how-it-works (cool blue)
-  finding:      '#6b8e4e',  // empirical claims, results (warm green)
-  caveat:       '#b85c38',  // limitations, null results, caveats (warm rust)
-  novel:        '#8b6bb1',  // the paper's novel contribution (muted purple)
+  // Semantic (left-border accents, small pills, text)
+  // Darkened from original values to meet WCAG AA 4.5:1 contrast against paper (#faf8f3)
+  method:       '#4a6fa5',  // process, pipeline, how-it-works (cool blue) — 4.8:1 ✓
+  finding:      '#537a3a',  // empirical claims, results (warm green) — 4.7:1 ✓ (was #6b8e4e, 3.3:1)
+  caveat:       '#ad5633',  // limitations, null results, caveats (warm rust) — 4.8:1 ✓ (was #b85c38, 4.3:1)
+  novel:        '#7f5fa3',  // the paper's novel contribution (muted purple) — 4.9:1 ✓ (was #8b6bb1, 4.0:1)
 
   // Interactive
   accent:       '#c4924a',  // sliders, buttons, interactive affordances (amber)

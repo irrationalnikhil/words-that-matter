@@ -11,7 +11,7 @@ export default function PlaygroundPage() {
   return (
     <>
       <TabSwitcher />
-      <main className="min-h-screen bg-paper">
+      <main className="min-h-screen bg-paper" aria-label="Pipeline Playground workspace">
         <div className="max-w-5xl mx-auto px-5">
           <header className="pt-8 md:pt-12 pb-4">
             <h1 className="font-display text-display-mobile md:text-display-desktop text-ink mb-3">

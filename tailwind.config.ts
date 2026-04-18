@@ -19,11 +19,11 @@ const config: Config = {
         'ink-muted':  '#5a5a5a',
         'ink-faint':  '#767676',  // WCAG AA fix: 4.54:1 against paper (was #8a8a8a at 3.27:1)
 
-        // Semantic (left-border accents, small pills — never text highlights)
+        // Semantic (borders, pills, text — darkened for WCAG AA 4.5:1 against paper)
         method:       '#4a6fa5',
-        finding:      '#6b8e4e',
-        caveat:       '#b85c38',
-        novel:        '#8b6bb1',
+        finding:      '#537a3a',  // was #6b8e4e (3.3:1 → 4.7:1)
+        caveat:       '#ad5633',  // was #b85c38 (4.3:1 → 4.8:1)
+        novel:        '#7f5fa3',  // was #8b6bb1 (4.0:1 → 4.9:1)
 
         // Interactive
         accent:       '#c4924a',

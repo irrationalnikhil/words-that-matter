@@ -37,6 +37,22 @@ export const metadata: Metadata = {
     description:
       'An A/B comparison of two ways to read a NeurIPS 2024 paper on generating hypotheses from language.',
     type: 'website',
+    url: 'https://words-that-matter.vercel.app',
+    images: [
+      {
+        url: '/og-image.svg',
+        width: 1200,
+        height: 630,
+        alt: 'Words that Work — Interactive Paper Reader. Batista & Ross, NeurIPS 2024.',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Words that Work — Interactive Paper Reader',
+    description:
+      'Two ways to read a NeurIPS 2024 paper on generating hypotheses from language using LLMs, ML, and experiments.',
+    images: ['/og-image.svg'],
   },
 }
 

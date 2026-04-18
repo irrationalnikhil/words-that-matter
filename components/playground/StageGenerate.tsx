@@ -177,10 +177,9 @@ export default function StageGenerate({ onHypothesisSelect }: StageGenerateProps
           The paper says…
         </div>
         <TextRail
-          sectionRef="§2.3, p.3"
+          sectionRef="§2.3, ¶2, p.3"
           paragraphs={[
-            'We used GPT-4 to generate hypotheses from pairs of headlines. For each pair, we prompted the model with a preamble, the two headlines, and a hypothesis structure, resulting in approximately 2,100 hypotheses.',
-            'We randomized across three prompt dimensions: preamble (9 variants), hypothesis structure (8 variants), and variation (4 variants), yielding 288 unique prompt configurations.',
+            'We provided GPT-4 with pairs of headlines written for the same story and indicated which had the higher CTR. The prompt then elicited a feature that fits the format: "Hypothesis: ______ [increases/decreases] engagement with a message." This step produced 2,100 interpretable hypotheses (which human raters, n = 79, also believed to be good quality).',
           ]}
           note="The authors note in §3 that prompt choice shapes outputs: &ldquo;we may have shifted the distribution of hypotheses to be more substantive than theoretical.&rdquo;"
         />

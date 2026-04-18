@@ -65,8 +65,8 @@
       "study2_p": null,
       "study2_significant": false,
       "study2_note": "null effect",
-      "noveltyCheck_p": null,
-      "noveltyCheck_significant": false
+      "noveltyCheck_p": "<.001",
+      "noveltyCheck_significant": true
     },
     {
       "id": "pr-2",
@@ -130,8 +130,8 @@
       "study2_p": "<.01",
       "study2_significant": true,
       "study2_note": "consistent direction",
-      "noveltyCheck_p": "<.001",
-      "noveltyCheck_significant": true
+      "noveltyCheck_p": null,
+      "noveltyCheck_significant": false
     }
   ],
   "funnelCounts": {

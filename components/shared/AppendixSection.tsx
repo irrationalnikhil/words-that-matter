@@ -13,7 +13,7 @@ import referencesData from '@/content/references.json'
  */
 export default function AppendixSection() {
   return (
-    <footer className="bg-paper-subtle border-t border-paper-deep mt-16">
+    <footer className="bg-paper-subtle border-t border-paper-deep mt-16" aria-label="Source materials">
       <div className="reading-column py-12 md:py-16">
         <h2 className="font-display text-h2-mobile md:text-h2-desktop text-ink mb-8">
           Source materials
@@ -123,23 +123,26 @@ export default function AppendixSection() {
             paper. <strong>The Annotated Edition</strong> renders the full paper with a live
             glossary and appendix material surfaced in the margins. <strong>The Pipeline
             Playground</strong> lets you walk through the paper&rsquo;s three-stage method on
-            real data. Both tabs display the authors&rsquo; verbatim text — every claim and
-            finding you see is a direct quote with page and section reference. We built both
-            to compare which pattern works better for communicating academic research to a
-            broad audience. If you have feedback, we&rsquo;d love to hear it.
+            real data. Paper text is always presented verbatim with section and page references.
+            Editorial gloss — our plain-English explanations — is always labeled as such and
+            visually distinct. We built both to compare which format works better for
+            communicating academic research to a broad audience.
           </p>
-          <a
-            href="https://tally.so/r/words-that-work-feedback"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-accent/10 border border-accent/20 rounded-md font-sans text-sm text-accent-deep hover:bg-accent/20 transition-colors"
-          >
-            Give feedback on this reader
-            <span aria-hidden="true">&rarr;</span>
-          </a>
-          <p className="font-sans text-[10px] text-ink-faint mt-2">
-            5 questions on comprehension, engagement, trust, appendix discovery, and preference.
-          </p>
+          <div className="mt-4 p-4 bg-paper rounded-lg border border-paper-deep">
+            <p className="font-sans text-sm font-semibold text-ink mb-2">
+              Questions for the reviewer
+            </p>
+            <ol className="list-decimal list-inside space-y-2 text-sm text-ink-muted">
+              <li>After using each tab, could you accurately describe the paper&rsquo;s main contribution to a colleague? What would you say?</li>
+              <li>Which tab did you spend more time in? What made you stay?</li>
+              <li>Did either tab ever feel like it was replacing the authors&rsquo; words with its own interpretation? If so, where?</li>
+              <li>Did you engage with any of these: Tables 1 &amp; 2, prompt variations, OSF links, pre-registration, full reference list?</li>
+              <li>Which format would you want for the next paper you read? Why?</li>
+            </ol>
+            <p className="font-sans text-[10px] text-ink-faint mt-3">
+              Also note which tab you started with (Annotated or Playground).
+            </p>
+          </div>
         </AppendixBlock>
       </div>
     </footer>

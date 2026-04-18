@@ -227,10 +227,10 @@ export default function StageRank({ selectedHypothesis }: StageRankProps) {
           The paper says…
         </div>
         <TextRail
-          sectionRef="§2.3, ¶4–5, p.3"
+          sectionRef="§2.3, ¶3, p.3"
           paragraphs={[
-            'For each hypothesis, we rewrote headlines to incorporate the hypothesized feature while keeping the story content the same. We generated 252,000 headline morphs across all hypothesis–headline combinations.',
-            'By applying the hypotheses to many different headlines and predicting their effect, we get a sense of how generalizable each hypothesis is.',
+            'We produced 252,000 counterfactual headlines ("morphs") by having GPT rewrite a set of Upworthy headlines to incorporate each feature. Each morph was based on one actual headline and one of the hypotheses. We then used the ML algorithm to predict the difference in CTR between each morph and the original headline it was based on.',
+            'By applying the hypotheses to many different headlines and predicting their effect, we get a sense of how generalizable it is.',
           ]}
           note="The ML model's predictions are not ground truth — they're signals. The actual test is Studies 1 and 2."
         />

@@ -19,7 +19,7 @@ export default function AnnotatedPage() {
     <>
       <TabSwitcher />
       <SectionProgress sections={paper.sections} />
-      <main className="min-h-screen bg-paper">
+      <main className="min-h-screen bg-paper" aria-label="Annotated Edition reading area">
         {/* Paper header — constrained to reading column */}
         <header className="reading-column pt-8 md:pt-12 pb-4">
           <h1 className="font-display text-display-mobile md:text-display-desktop text-ink mb-3">

@@ -26,8 +26,9 @@ export default function Home() {
 
         {/* Pitch */}
         <p className="font-serif text-body-mobile md:text-body-desktop text-ink mb-12 max-w-reading-narrow">
-          This paper presents a way to turn thousands of A/B tests into testable
-          hypotheses using LLMs. We&rsquo;ve built two different readers for
+          This paper presents a process for generating testable hypotheses from
+          text, combining LLMs, machine learning, and psychology experiments.
+          We&rsquo;ve built two different readers for
           it&thinsp;&mdash;&thinsp;pick one, or compare both.
         </p>
 

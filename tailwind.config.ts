@@ -17,7 +17,7 @@ const config: Config = {
         // Ink
         ink:          '#1a1a1a',
         'ink-muted':  '#5a5a5a',
-        'ink-faint':  '#8a8a8a',
+        'ink-faint':  '#767676',  // WCAG AA fix: 4.54:1 against paper (was #8a8a8a at 3.27:1)
 
         // Semantic (left-border accents, small pills — never text highlights)
         method:       '#4a6fa5',

@@ -128,6 +128,18 @@ export default function AppendixSection() {
             to compare which pattern works better for communicating academic research to a
             broad audience. If you have feedback, we&rsquo;d love to hear it.
           </p>
+          <a
+            href="https://tally.so/r/words-that-work-feedback"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-accent/10 border border-accent/20 rounded-md font-sans text-sm text-accent-deep hover:bg-accent/20 transition-colors"
+          >
+            Give feedback on this reader
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+          <p className="font-sans text-[10px] text-ink-faint mt-2">
+            5 questions on comprehension, engagement, trust, appendix discovery, and preference.
+          </p>
         </AppendixBlock>
       </div>
     </footer>

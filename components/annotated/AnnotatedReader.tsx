@@ -9,6 +9,8 @@ import { renderTextWithTerms } from '@/lib/renderTextWithTerms'
 // Lazy-load interactives per P4 performance budget
 const FilteringFunnel = lazy(() => import('./FilteringFunnel'))
 const HypothesisResults = lazy(() => import('./HypothesisResults'))
+const ShrinkageSlider = lazy(() => import('./ShrinkageSlider'))
+const RSquaredChart = lazy(() => import('./RSquaredChart'))
 
 // Map of section IDs to the interactive that follows them
 const interactiveAfterSection: Record<string, React.ReactNode> = {
@@ -21,6 +23,40 @@ const interactiveAfterSection: Record<string, React.ReactNode> = {
     <Suspense fallback={<InteractiveLoading />}>
       <HypothesisResults />
     </Suspense>
+  ),
+}
+
+// Map of paragraph IDs to interactives placed after that paragraph (more precise than section-level)
+const interactiveAfterParagraph: Record<string, React.ReactNode> = {
+  'p-2.1-2': (
+    <Suspense fallback={<InteractiveLoading />}>
+      <ShrinkageSlider />
+    </Suspense>
+  ),
+  'p-2.2-4': (
+    <Suspense fallback={<InteractiveLoading />}>
+      <RSquaredChart />
+    </Suspense>
+  ),
+}
+
+// Figure placed before a section's paragraphs
+const figureBeforeSection: Record<string, React.ReactNode> = {
+  '2.3': (
+    <figure className="my-6">
+      <img
+        src="/figure-1.svg"
+        alt="Pipeline overview: Data (Upworthy Archive, 32k A/B tests) → Prepare (Shrinkage + ∆CTR, Eq. 1) → Model (Siamese network, R² 0.04→0.13) → Generate (GPT-4 + 288 prompt configs → 2,100 hypotheses) → Rank (252k headline morphs, predict ∆CTR) → Filter (de-duplication + FDR → 6 pre-registered) → Test (Studies 1 & 2)"
+        className="w-full rounded-lg border border-paper-deep"
+        loading="lazy"
+        width={900}
+        height={320}
+      />
+      <figcaption className="mt-2 font-sans text-xs text-ink-faint text-center">
+        Figure 1: The full pipeline — from Upworthy A/B tests to pre-registered hypotheses.
+        Redrawn from the paper (p.3) in the project&apos;s warm palette.
+      </figcaption>
+    </figure>
   ),
 }
 
@@ -110,6 +146,9 @@ function SectionBlock({ section, glossary }: { section: Section; glossary: Gloss
         </p>
       </header>
 
+      {/* Figure before section if applicable (e.g. Figure 1 before §2.3) */}
+      {figureBeforeSection[section.id]}
+
       {/* Paragraphs with margin rail layout */}
       {section.paragraphs.map((para) => (
         <ParagraphBlock key={para.id} paragraph={para} sectionId={section.id} glossary={glossary} />
@@ -155,6 +194,13 @@ function ParagraphBlock({
         {paragraph.equations?.map((eq) => (
           <KaTeXBlock key={eq.id} latex={eq.latex} label={eq.label} />
         ))}
+
+        {/* Paragraph-level interactive (e.g. shrinkage slider after Eq. 1) */}
+        {interactiveAfterParagraph[paragraph.id] && (
+          <div className="mt-2">
+            {interactiveAfterParagraph[paragraph.id]}
+          </div>
+        )}
 
         {/* Mobile-only: margin notes inline */}
         {hasMarginNotes && (

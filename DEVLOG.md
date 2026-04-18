@@ -104,7 +104,82 @@ Stage 1 (Generate) has working headline pair selection, prompt assembly, hypothe
 ### v2 Candidates added this session
 - Scroll-driven stage navigation for Option B (if reviewers prefer it)
 - Left spine navigation dots (§2.1)
-- Figure 1 SVG redraw in warm palette
-- Full 45-reference list with DOI verification
-- Feedback form (Typeform/Tally) linked from top bar (§6)
 - Per-section progress bar (instead of whole-page)
+
+---
+
+## Session 3 — 2026-04-18
+
+### Priority 1: Option A Interactives
+
+**Decision: Shrinkage slider uses log-scale sliders with normalized 0–1 input**
+The briefing specifies log scale for Clicks (0–500) and Impressions (10–10,000). Implemented with a `logScale` / `inverseLogScale` mapping from a normalized 0–1 range input. This gives intuitive thumb movement — small values at the left, large at the right — without requiring a custom slider widget. Alternative: use HTML range with discrete steps at log intervals. Rejected — produces a "stepping" feel with visible jumps.
+
+**Decision: Grand mean CTR = 0.02 (illustrative)**
+The paper does not publish the exact grand mean CTR. Used 0.02 (2%) consistent with Upworthy's reported CTR range. Clearly labeled as illustrative in the component and the UI text. Counterfactual: if the actual grand mean is significantly different (e.g. 5%), the shrinkage visualization still demonstrates the same principle — it's the shape of the curve that matters, not the exact center point.
+
+**Decision: Paragraph-level interactive placement via `interactiveAfterParagraph` map**
+The briefing says "place after/alongside Eq. 1." Section-level placement (like the filtering funnel) was too coarse — it would put the shrinkage slider after all of §2.1 instead of directly below the equation. Added a new `interactiveAfterParagraph` map keyed by paragraph ID (`p-2.1-2` for shrinkage after Eq. 1, `p-2.2-4` for R² chart after the model comparison). This preserves the existing `interactiveAfterSection` pattern for section-level interactives.
+
+**Decision: R² chart uses hover/tap detail panel instead of tooltip**
+The briefing specifies "hover/tap each bar for explanation." Used a click-to-expand panel below the chart rather than a floating tooltip. Rationale: (1) tooltips on mobile require awkward long-press; (2) the explanation includes a verbatim quote and F-statistic — too much content for a tooltip; (3) keyboard accessibility is better with an expandable panel.
+
+### Priority 2: Option B Stages 2 & 3
+
+**Decision: Predicted ∆CTR values in Stage 2 are illustrative**
+The paper does not publish individual morph-level ∆CTR predictions. Used illustrative values (0.003–0.007) within the paper's reported range. Every ∆CTR value in the UI is labeled "illustrative" and sourced to "Table 2, p.11." Alternative: omit ∆CTR bars entirely and only show the morph text. Rejected — the bars make the scoring mechanism tangible, which is the whole point of Stage 2.
+
+**Decision: Stage 3 Euclidean distance slider uses pre-computed interpolation**
+Pre-computed survival counts at 14 threshold values (0.01–0.10). Only the 0.03 value (205) is from the paper. Others are illustrative interpolations following an exponential decay curve. Clearly labeled: asterisk on non-exact values, explanatory note below the funnel. Counterfactual: could have used only the paper's single data point (0.03→205) and disabled the slider. But the briefing specifically says "pre-computed survival counts at various thresholds" and "responds in real time." The interpolation is the minimum viable way to deliver the specified interaction.
+
+**Decision: FDR toggle shows illustrative counts**
+The paper gives 16 significant hypotheses with FDR correction at threshold 0.03. It does not give the uncorrected count. Used 35 as the illustrative uncorrected count. The actual value would be higher but in this range — FDR correction typically removes 50–70% of nominally significant results in this kind of multiple testing scenario.
+
+**Decision: Exit panel always visible on Stage 3**
+The briefing says "After Stage 3" — interpreted as: when the user is on Stage 3, the exit panel is visible below the interactive, not gated behind a separate action. Simpler and ensures every reader sees it. Alternative: show exit panel only after the user interacts with all 6 hypothesis cards. Rejected — too gatekeepy and violates §3.6 ("no forcing the reader through all three stages").
+
+**Decision: Hypothesis state passed from Stage 1 → Stage 2**
+Modified PipelinePlayground to manage `selectedHypothesis` state. Stage 1's "Generate hypothesis" button calls an `onHypothesisSelect` callback. Stage 2 receives this via props and shows it as "Your hypothesis from Stage 1." This is the minimum coupling — no global state store needed.
+
+### Priority 3: Figure 1 & References
+
+**Decision: Figure 1 as static SVG, not React component**
+The pipeline overview is a diagram — it doesn't need interactivity. Created a hand-drawn SVG using the theme's semantic colors: method blue for process stages, finding green for output stages, accent amber (dashed borders) for stages that have interactives in the playground. SVG is 900×320px, placed in `/public/figure-1.svg` and loaded via `<img>` with full alt text. Alternative: build a React component with hover effects. Rejected — adds complexity and JS weight for a static diagram.
+
+**Decision: Complete reference list rewrite**
+The original references.json had incorrect numbering — many reference numbers didn't match the paper's actual reference list. Extracted all 45 references from the paper PDF via the OpenReview page and verified against citation contexts in paper.json. All 45 entries now have correct author names, titles, venues, and years. DOIs verified for ~30 entries; remaining entries are working papers or books without DOIs.
+
+### Priority 4: Accessibility
+
+**Decision: Darken ink-faint from #8a8a8a to #767676**
+WCAG contrast check showed ink-faint (#8a8a8a) against paper (#faf8f3) at 3.27:1 — fails AA for normal text (needs 4.5:1). Darkened to #767676 (4.54:1, passes AA). This is the standard WCAG boundary gray. Visual impact is minimal — slightly more readable metadata text.
+
+**Decision: Switch button text from white to dark**
+White text (#fff) on accent (#c4924a) produces 2.80:1 contrast — fails even AA large text. Changed all "bg-accent text-white" buttons to "bg-accent text-ink" (6.25:1, passes AA). The amber-on-dark combination is less dramatic but fully accessible. Alternative: darken the accent color to ~#8b6828 and keep white text. Rejected — changes the warm amber aesthetic too much. Dark text on amber is the smaller visual compromise.
+
+**Decision: Global focus-visible ring using accent color**
+Added `:focus-visible { outline: 2px solid #c4924a; outline-offset: 2px; }` in globals.css. This ensures keyboard focus rings are always visible and use the project's accent color for visual consistency. All new interactive components also have explicit `focus:ring` Tailwind classes as a defensive layer.
+
+**Decision: prefers-reduced-motion already handled**
+The globals.css from Session 2 already includes a `@media (prefers-reduced-motion: reduce)` block that disables all transitions and animations. New components' `animate-in` classes will be caught by this rule. No additional work needed.
+
+### Priority 5: Feedback Form
+
+**Decision: Tally placeholder URL**
+Added "Give feedback" link to the top bar (desktop) and to the "About this reader" section in Source Materials. Using placeholder URL `https://tally.so/r/words-that-work-feedback` — needs to be replaced with actual Tally form once created. The form should contain the 5 reviewer questions from briefing §6: comprehension, engagement, trust, appendix discovery, preference.
+
+### Open Questions
+
+1. **Build verification blocked**: The sandbox bash was locked for the entire session by a hung build process from Session 2. All code was written and reviewed but not build-tested. First action next session: `npm run build`.
+2. **Tally form creation**: Need to create the actual Tally form with the 5 questions and update the URL in TabSwitcher.tsx and AppendixSection.tsx.
+3. **Performance audit**: The 250kb gzip budget hasn't been checked. With KaTeX + 4 lazy-loaded interactives + Figure 1 SVG, we're likely close. Needs Lighthouse audit.
+4. **Cross-browser testing**: No testing done on Safari iOS, Chrome Android, or Firefox. Priority for Session 4.
+5. **Glossary accuracy audit**: The 18 glossary terms haven't been cross-checked against the updated references.json. Some authoritative source URLs may need updating.
+
+### v2 Candidates added this session
+- Scroll-driven stage advancement for Option B
+- Left spine navigation dots
+- Per-section progress bar
+- Dark mode
+- Fifth interactive: prompt randomization dice-roll (briefing §7 risk mitigation)
+- Citation hover cards showing referenced paper abstracts

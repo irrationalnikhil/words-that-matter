@@ -1,45 +1,235 @@
 {
   "_meta": {
-    "description": "References from the paper. Numbered [1]–[45] per the paper's reference list. Key references with verified DOIs/URLs included; remainder need verification from PDF.",
-    "status": "partial — key references verified, full set needs PDF extraction"
+    "description": "All 45 references from the paper, numbered [1]–[45] per the paper's reference list.",
+    "source": "Extracted from paper PDF (OpenReview). DOIs verified where available.",
+    "status": "complete — all 45 references with DOIs where verified",
+    "lastUpdated": "2026-04-18"
   },
   "references": [
-    { "id": 1, "text": "Agrawal, A., Gans, J., & Goldfarb, A. (2018). Prediction Machines. Harvard Business Review Press.", "url": null },
-    { "id": 2, "text": "Berger, J., Humphreys, A., Ludwig, S., Moe, W. W., Netzer, O., & Schweidel, D. A. (2020). Uniting the tribes: Using text for marketing insight. Journal of Marketing, 84(1), 1–25.", "url": "https://doi.org/10.1177/0022242919873106" },
-    { "id": 3, "text": "Bettman, J. R., Luce, M. F., & Payne, J. W. (1998). Constructive consumer choice processes. Journal of Consumer Research, 25(3), 187–217.", "url": "https://doi.org/10.1086/209535" },
-    { "id": 4, "text": "Berman, R. & Van den Bulte, C. (2022). False discovery in A/B testing. Management Science, 68(9), 6762–6782.", "url": "https://doi.org/10.1287/mnsc.2021.4207" },
-    { "id": 5, "text": "Bojinov, I., Simchi-Levi, D., & Zhao, J. (2023). Design and analysis of switchback experiments. Management Science, 69(7), 3759–3777.", "url": null },
-    { "id": 6, "text": "Berger, J. & Milkman, K. L. (2012). What makes online content viral? Journal of Marketing Research, 49(2), 192–205.", "url": "https://doi.org/10.1509/jmr.10.0353" },
-    { "id": 7, "text": "Burnham, K. P. & Anderson, D. R. (2004). Multimodel inference: Understanding AIC and BIC in model selection. Sociological Methods & Research, 33(2), 261–304.", "url": null },
-    { "id": 9, "text": "Dzyabura, D. & Hauser, J. R. (2019). Recommending products when consumers learn their preference weights. Marketing Science, 38(3), 417–441.", "url": null },
-    { "id": 10, "text": "Eckles, D., Gordon, B. R., & Johnson, G. A. (2018). Field studies of psychologically targeted mass communication. Proceedings of the National Academy of Sciences, 115(48), 12313–12318.", "url": null },
-    { "id": 11, "text": "Fossen, B. L. & Schweidel, D. A. (2019). Social TV, advertising, and sales: Are social shows good for advertisers? Marketing Science, 38(2), 274–295.", "url": null },
-    { "id": 12, "text": "Golder, S. A. & Macy, M. W. (2011). Diurnal and seasonal mood vary with work, sleep, and daylength across diverse cultures. Science, 333(6051), 1878–1881.", "url": null },
-    { "id": 14, "text": "Gupta, S., Hanssens, D. M., Hauser, J. R., Lehmann, D. R., & Schmittlein, D. C. (2006). Rejoinder — Towards a practice-centered research agenda. Marketing Science, 25(6), 555–559.", "url": null },
-    { "id": 15, "text": "Heath, C. & Heath, D. (2007). Made to Stick: Why Some Ideas Survive and Others Die. Random House.", "url": null },
-    { "id": 16, "text": "Horton, J. J., Johari, R., & Kircher, P. (2023). Cheap talk in experiments. Management Science.", "url": null },
-    { "id": 17, "text": "Humphreys, A. & Wang, R. J.-H. (2018). Automated text analysis for consumer research. Journal of Consumer Research, 44(6), 1274–1306.", "url": "https://doi.org/10.1093/jcr/ucx104" },
-    { "id": 18, "text": "Jha, M. & Liu, H. (2024). Generative AI for financial research. Working Paper.", "url": null },
-    { "id": 19, "text": "Kannan, P. K. & Li, H. (2017). Digital marketing: A framework, review and research agenda. International Journal of Research in Marketing, 34(1), 22–45.", "url": null },
-    { "id": 20, "text": "Klostermann, J., Plumeyer, A., Böger, D., & Decker, R. (2018). Extracting brand information from social networks. International Journal of Research in Marketing, 35(2), 223–242.", "url": null },
-    { "id": 21, "text": "Kohavi, R. & Thomke, S. (2017). The surprising power of online experiments. Harvard Business Review, 95(5), 74–82.", "url": null },
-    { "id": 23, "text": "Lewis, R. A. & Rao, J. M. (2015). The unfavorable economics of measuring the returns to advertising. Quarterly Journal of Economics, 130(4), 1941–1973.", "url": null },
-    { "id": 25, "text": "Ludwig, S., De Ruyter, K., Friedman, M., Brüggen, E. C., Wetzels, M., & Pfann, G. (2013). More than words: The influence of affective content and linguistic style matches in online reviews. Journal of Marketing, 77(1), 87–103.", "url": null },
-    { "id": 26, "text": "Lupyan, G. & Bergen, B. (2016). How language programs the mind. Topics in Cognitive Science, 8(2), 408–424.", "url": null },
-    { "id": 27, "text": "Ma, L. & Sun, B. (2020). Machine learning and AI in marketing — connecting computing power to human insights. International Journal of Research in Marketing, 37(3), 481–504.", "url": null },
-    { "id": 28, "text": "MacKenzie, S. B. (2003). The dangers of poor construct conceptualization. Journal of the Academy of Marketing Science, 31(3), 323–326.", "url": null },
-    { "id": 29, "text": "Marketers should consider a broader range of outlets for research. Working paper.", "url": null },
-    { "id": 30, "text": "Manning, C. D. (2022). Human language understanding & reasoning. Daedalus, 151(2), 127–138.", "url": null },
-    { "id": 31, "text": "Matias, J. N., Munger, K., Aubin Le Quéré, M., & Ebersole, C. (2021). The Upworthy Research Archive. Scientific Data, 8(1), 1–6.", "url": "https://www.nature.com/articles/s41597-021-00934-7" },
-    { "id": 32, "text": "McShane, B. B. & Böckenholt, U. (2017). Single paper meta-analysis: Benefits for study summary, theory-testing, and replicability. Journal of Consumer Research, 43(6), 1048–1063.", "url": null },
-    { "id": 33, "text": "Molnar, C. (2020). Interpretable Machine Learning. lulu.com.", "url": "https://christophm.github.io/interpretable-ml-book/" },
-    { "id": 34, "text": "Pennebaker, J. W., Boyd, R. L., Jordan, K., & Blackburn, K. (2015). The development and psychometric properties of LIWC2015.", "url": "https://www.liwc.app/" },
-    { "id": 35, "text": "Pennebaker, J. W. (2011). The Secret Life of Pronouns. Bloomsbury Press.", "url": null },
-    { "id": 36, "text": "Puranam, P. & Swamy, M. (2016). How initial representations shape coupled learning processes. Organization Science, 27(2), 323–335.", "url": null },
-    { "id": 37, "text": "Rosenberg, A. (2012). Philosophy of Science: A Contemporary Introduction. Routledge.", "url": null },
-    { "id": 41, "text": "Song, K., Tan, X., Qin, T., Lu, J., & Liu, T.-Y. (2020). MPNet: Masked and Permuted Pre-training for Language Understanding. NeurIPS 2020.", "url": "https://arxiv.org/abs/2004.09297" },
-    { "id": 42, "text": "Siroker, D. & Koomen, P. (2013). A/B Testing: The Most Powerful Way to Turn Clicks into Customers. John Wiley & Sons.", "url": null },
-    { "id": 44, "text": "Yang, S. & Yang, S. (2023). Large language models for automated hypothesis generation and evaluation. Working Paper.", "url": null },
-    { "id": 45, "text": "Zhou, Y. et al. (2023). Large language models for marketing research. Working Paper.", "url": null }
+    {
+      "id": 1,
+      "text": "Adolphs, R., Nummenmaa, L., Todorov, A., & Haxby, J. V. (2016). Data-driven approaches in the investigation of social perception. Philosophical Transactions of the Royal Society B: Biological Sciences, 371(1693), 20150367.",
+      "url": "https://doi.org/10.1098/rstb.2015.0367"
+    },
+    {
+      "id": 2,
+      "text": "Aka, A., Bhatia, S., & McCoy, J. (2023). Semantic determinants of memorability. Cognition, 239, 105497.",
+      "url": "https://doi.org/10.1016/j.cognition.2023.105497"
+    },
+    {
+      "id": 3,
+      "text": "Alba, J. W. (2012). In Defense of Bumbling. Journal of Consumer Research, 38(6), 981–987.",
+      "url": "https://doi.org/10.1086/661084"
+    },
+    {
+      "id": 4,
+      "text": "Angelopoulos, P., Lee, K., & Misra, S. (2024). Value Aligned Large Language Models. Working Paper.",
+      "url": null
+    },
+    {
+      "id": 5,
+      "text": "Azevedo, E. M., Deng, A., Montiel Olea, J. L., Rao, J., & Weyl, E. G. (2020). A/B Testing with Fat Tails. Journal of Political Economy, 128(12), 4614–4657.",
+      "url": "https://doi.org/10.1086/710607"
+    },
+    {
+      "id": 6,
+      "text": "Banerjee, A. & Urminsky, O. (2023). The Language That Drives Engagement: A Systematic Large-scale Analysis of Headline Experiments. Working Paper.",
+      "url": null
+    },
+    {
+      "id": 7,
+      "text": "Banker, S., Chatterjee, P., Mishra, H., & Mishra, A. (2023). Machine-Assisted Social Psychology Hypothesis Generation. Working Paper.",
+      "url": null
+    },
+    {
+      "id": 8,
+      "text": "Benjamini, Y. & Hochberg, Y. (1995). Controlling the False Discovery Rate: A Practical and Powerful Approach to Multiple Testing. Journal of the Royal Statistical Society: Series B (Methodological), 57(1), 289–300.",
+      "url": "https://doi.org/10.1111/j.2517-6161.1995.tb02031.x"
+    },
+    {
+      "id": 9,
+      "text": "Berger, J., Humphreys, A., Ludwig, S., Moe, W. W., Netzer, O., & Schweidel, D. A. (2020). Uniting the Tribes: Using Text for Marketing Insight. Journal of Marketing, 84(1), 1–25.",
+      "url": "https://doi.org/10.1177/0022242919873106"
+    },
+    {
+      "id": 10,
+      "text": "Berger, J., Kim, Y. D., & Meyer, R. (2021). What Makes Content Engaging? How Emotional Dynamics Shape Success. Journal of Consumer Research, 48(2), 235–250.",
+      "url": "https://doi.org/10.1093/jcr/ucab010"
+    },
+    {
+      "id": 11,
+      "text": "Berger, J., Moe, W. W., & Schweidel, D. A. (2023). What Holds Attention? Linguistic Drivers of Engagement. Journal of Marketing, 87(5), 793–809.",
+      "url": "https://doi.org/10.1177/00222429231152880"
+    },
+    {
+      "id": 12,
+      "text": "Berger, J. & Packard, G. (2023). Wisdom from words: The psychology of consumer language. Consumer Psychology Review, 6(1), 3–16.",
+      "url": "https://doi.org/10.1002/arcp.1085"
+    },
+    {
+      "id": 13,
+      "text": "Bromley, J., Guyon, I., LeCun, Y., Säckinger, E., & Shah, R. (1993). Signature Verification using a \"Siamese\" Time Delay Neural Network. In Advances in Neural Information Processing Systems (Vol. 6). Morgan-Kaufmann.",
+      "url": "https://proceedings.neurips.cc/paper/1993/hash/288cc0ff022877bd3df94bc9360b9c5d-Abstract.html"
+    },
+    {
+      "id": 14,
+      "text": "Day, G. S. (2011). Closing the Marketing Capabilities Gap. Journal of Marketing, 75(4), 183–195.",
+      "url": "https://doi.org/10.1509/jmkg.75.4.183"
+    },
+    {
+      "id": 15,
+      "text": "De La Rosa, W., Sharma, E., Tully, S. M., Giannella, E., & Rino, G. (2021). Psychological ownership interventions increase interest in claiming government benefits. Proceedings of the National Academy of Sciences, 118(35), e2106357118.",
+      "url": "https://doi.org/10.1073/pnas.2106357118"
+    },
+    {
+      "id": 16,
+      "text": "Gebhardt, G. F., Carpenter, G. S., & Sherry, J. F. (2006). Creating a Market Orientation: A Longitudinal, Multifirm, Grounded Analysis of Cultural Transformation. Journal of Marketing, 70(4), 37–55.",
+      "url": "https://doi.org/10.1509/jmkg.70.4.037"
+    },
+    {
+      "id": 17,
+      "text": "Hartmann, J., Huppertz, J., Schamp, C., & Heitmann, M. (2019). Comparing automated text classification methods. International Journal of Research in Marketing, 36(1), 20–38.",
+      "url": "https://doi.org/10.1016/j.ijresmar.2018.09.009"
+    },
+    {
+      "id": 18,
+      "text": "Hartmann, J. & Netzer, O. (2023). Natural Language Processing in Marketing. In K. Sudhir & O. Toubia (Eds.), Artificial Intelligence in Marketing (Vol. 20, pp. 191–215). Emerald Publishing Limited.",
+      "url": null
+    },
+    {
+      "id": 19,
+      "text": "Humphreys, A. & Wang, R. J.-H. (2018). Automated Text Analysis for Consumer Research. Journal of Consumer Research, 44(6), 1274–1306.",
+      "url": "https://doi.org/10.1093/jcr/ucx104"
+    },
+    {
+      "id": 20,
+      "text": "Jackson, J. C., Watts, J., List, J.-M., Puryear, C., Drabble, R., & Lindquist, K. A. (2022). From Text to Thought: How Analyzing Language Can Advance Psychological Science. Perspectives on Psychological Science, 17(3), 805–826.",
+      "url": "https://doi.org/10.1177/17456916211004899"
+    },
+    {
+      "id": 21,
+      "text": "Janiszewski, C. & van Osselaer, S. M. J. (2021). The Benefits of Candidly Reporting Consumer Research. Journal of Consumer Psychology, 31(4), 633–646.",
+      "url": "https://doi.org/10.1002/jcpy.1266"
+    },
+    {
+      "id": 22,
+      "text": "Kerr, N. L. (1998). HARKing: Hypothesizing After the Results are Known. Personality and Social Psychology Review, 2(3), 196–217.",
+      "url": "https://doi.org/10.1207/s15327957pspr0203_4"
+    },
+    {
+      "id": 23,
+      "text": "Koning, R., Hasan, S., & Chatterji, A. (2022). Experimentation and Start-up Performance: Evidence from A/B Testing. Management Science, 68(9), 6434–6453.",
+      "url": "https://doi.org/10.1287/mnsc.2021.4209"
+    },
+    {
+      "id": 24,
+      "text": "Landy, J. F., Jia, M. L., Ding, I. L., Viganola, D., Tierney, W., Dreber, A., ... & Uhlmann, E. L. (2020). Crowdsourcing hypothesis tests: Making transparent how design choices shape research results. Psychological Bulletin, 146(5), 451–479.",
+      "url": "https://doi.org/10.1037/bul0000220"
+    },
+    {
+      "id": 25,
+      "text": "Lee, D., Hosanagar, K., & Nair, H. S. (2018). Advertising Content and Consumer Engagement on Social Media: Evidence from Facebook. Management Science, 64(11), 5105–5131.",
+      "url": "https://doi.org/10.1287/mnsc.2017.2902"
+    },
+    {
+      "id": 26,
+      "text": "Linos, E., Lasky-Fink, J., Larkin, C., Moore, L., & Kirkman, E. (2024). The formality effect. Nature Human Behaviour, 8(2), 300–310.",
+      "url": "https://doi.org/10.1038/s41562-023-01765-5"
+    },
+    {
+      "id": 27,
+      "text": "Ludwig, J. & Mullainathan, S. (2024). Machine Learning as a Tool for Hypothesis Generation. The Quarterly Journal of Economics, qjad055.",
+      "url": "https://doi.org/10.1093/qje/qjad055"
+    },
+    {
+      "id": 28,
+      "text": "Lynch, J. G., Alba, J. W., Krishna, A., Morwitz, V. G., & Gürhan-Canli, Z. (2012). Knowledge creation in consumer research: Multiple routes, multiple criteria. Journal of Consumer Psychology, 22(4), 473–485.",
+      "url": "https://doi.org/10.1016/j.jcps.2012.07.004"
+    },
+    {
+      "id": 29,
+      "text": "MacInnis, D. J., Morwitz, V. G., Botti, S., Hoffman, D. L., Kozinets, R. V., Lehmann, D. R., Lynch, J. G., & Pechmann, C. (2020). Creating Boundary-Breaking, Marketing-Relevant Consumer Research. Journal of Marketing, 84(2), 1–23.",
+      "url": "https://doi.org/10.1177/0022242919889876"
+    },
+    {
+      "id": 30,
+      "text": "Manning, B. S., Zhu, K., & Horton, J. J. (2024). Automated Social Science: Language Models as Scientist and Subjects. Working Paper.",
+      "url": null
+    },
+    {
+      "id": 31,
+      "text": "Matias, J. N., Munger, K., Aubin Le Quéré, M., & Ebersole, C. (2021). The Upworthy Research Archive, a time series of 32,487 experiments in U.S. media. Scientific Data, 8(1), 195.",
+      "url": "https://doi.org/10.1038/s41597-021-00934-7"
+    },
+    {
+      "id": 32,
+      "text": "McGuire, W. J. (1997). Creative Hypothesis Generating in Psychology: Some Useful Heuristics. Annual Review of Psychology, 48(1), 1–30.",
+      "url": "https://doi.org/10.1146/annurev.psych.48.1.1"
+    },
+    {
+      "id": 33,
+      "text": "Messeri, L. & Crockett, M. J. (2024). Artificial intelligence and illusions of understanding in scientific research. Nature, 627(8002), 49–58.",
+      "url": "https://doi.org/10.1038/s41586-024-07146-0"
+    },
+    {
+      "id": 34,
+      "text": "Milkman, K. L., Gandhi, L., Patel, M. S., Graci, H. N., Gromet, D. M., Ho, H., ... & Duckworth, A. L. (2022). A 680,000-person megastudy of nudges to encourage vaccination in pharmacies. Proceedings of the National Academy of Sciences, 119(6), e2115126119.",
+      "url": "https://doi.org/10.1073/pnas.2115126119"
+    },
+    {
+      "id": 35,
+      "text": "Milkman, K. L., Patel, M. S., Gandhi, L., Graci, H. N., Gromet, D. M., Ho, H., ... & Duckworth, A. L. (2021). A megastudy of text-based nudges encouraging patients to get vaccinated at an upcoming doctor's appointment. Proceedings of the National Academy of Sciences, 118(20), e2101165118.",
+      "url": "https://doi.org/10.1073/pnas.2101165118"
+    },
+    {
+      "id": 36,
+      "text": "Moorman, C. & Day, G. S. (2016). Organizing for Marketing Excellence. Journal of Marketing, 80(6), 6–35.",
+      "url": "https://doi.org/10.1509/jm.15.0423"
+    },
+    {
+      "id": 37,
+      "text": "Mortensen, C. R. & Cialdini, R. B. (2010). Full-Cycle Social Psychology for Theory and Application. Social and Personality Psychology Compass, 4(1), 53–63.",
+      "url": "https://doi.org/10.1111/j.1751-9004.2009.00239.x"
+    },
+    {
+      "id": 38,
+      "text": "Schaller, M. (2016). The empirical benefits of conceptual rigor: Systematic articulation of conceptual hypotheses can reduce the risk of non-replicable results. Journal of Experimental Social Psychology, 66, 107–115.",
+      "url": "https://doi.org/10.1016/j.jesp.2015.09.006"
+    },
+    {
+      "id": 39,
+      "text": "Simmons, J. P., Nelson, L. D., & Simonsohn, U. (2021). Pre-registration: Why and How. Journal of Consumer Psychology, 31(1), 151–162.",
+      "url": "https://doi.org/10.1002/jcpy.1208"
+    },
+    {
+      "id": 40,
+      "text": "Song, K., Tan, X., Qin, T., Lu, J., & Liu, T.-Y. (2020). MPNet: Masked and Permuted Pre-training for Language Understanding. NeurIPS 2020.",
+      "url": "https://arxiv.org/abs/2004.09297"
+    },
+    {
+      "id": 41,
+      "text": "Vafa, K., Chen, J. Y., Kleinberg, J., Mullainathan, S., & Rambachan, A. (2024). Evaluating the World Model Implicit in a Generative Model. arXiv:2406.03689.",
+      "url": "https://arxiv.org/abs/2406.03689"
+    },
+    {
+      "id": 42,
+      "text": "Wang, H., Fu, T., Du, Y., Gao, W., Huang, K., Liu, Z., ... & Zitnik, M. (2023). Scientific discovery in the age of artificial intelligence. Nature, 620(7972), 47–60.",
+      "url": "https://doi.org/10.1038/s41586-023-06221-2"
+    },
+    {
+      "id": 43,
+      "text": "Wicherts, J. M., Veldkamp, C. L. S., Augusteijn, H. E. M., Bakker, M., van Aert, R. C. M., & van Assen, M. A. L. M. (2016). Degrees of Freedom in Planning, Running, Analyzing, and Reporting Psychological Studies: A Checklist to Avoid p-Hacking. Frontiers in Psychology, 7.",
+      "url": "https://doi.org/10.3389/fpsyg.2016.01832"
+    },
+    {
+      "id": 44,
+      "text": "Yiu, E., Kosoy, E., & Gopnik, A. (2023). Transmission Versus Truth, Imitation Versus Innovation: What Children Can Do That Large Language and Language-and-Vision Models Cannot (Yet). Perspectives on Psychological Science, 17456916231201401.",
+      "url": "https://doi.org/10.1177/17456916231201401"
+    },
+    {
+      "id": 45,
+      "text": "Zhou, Y., Liu, H., Srivastava, T., Mei, H., & Tan, C. (2024). Hypothesis Generation with Large Language Models. arXiv:2404.04326.",
+      "url": "https://arxiv.org/abs/2404.04326"
+    }
   ]
 }

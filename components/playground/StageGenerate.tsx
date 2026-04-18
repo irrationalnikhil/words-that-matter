@@ -13,7 +13,11 @@ const examples = hypothesesData.examples
  * Shows prompt structure from prompts.json with the three randomization axes as dropdowns.
  * Per briefing §3.3 Stage 1.
  */
-export default function StageGenerate() {
+interface StageGenerateProps {
+  onHypothesisSelect?: (hypothesis: string) => void
+}
+
+export default function StageGenerate({ onHypothesisSelect }: StageGenerateProps) {
   const [selectedPair, setSelectedPair] = useState<number | null>(null)
   const [showHypothesis, setShowHypothesis] = useState(false)
   const [preambleIndex, setPreambleIndex] = useState(0)
@@ -128,8 +132,13 @@ export default function StageGenerate() {
 
             {/* Generate button */}
             <button
-              onClick={() => setShowHypothesis(true)}
-              className="mt-4 px-5 py-2 bg-accent text-white font-sans text-sm font-medium rounded-md hover:bg-accent-deep transition-colors"
+              onClick={() => {
+                setShowHypothesis(true)
+                if (selected && onHypothesisSelect) {
+                  onHypothesisSelect(selected.hypothesis)
+                }
+              }}
+              className="mt-4 px-5 py-2 bg-accent text-ink font-sans text-sm font-medium rounded-md hover:bg-accent-deep transition-colors focus:outline-none focus:ring-2 focus:ring-accent/30"
             >
               Generate hypothesis
             </button>

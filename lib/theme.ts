@@ -8,7 +8,7 @@ export const colors = {
   paperDeep:    '#ede6d3',  // pull-quotes, accent panels
   ink:          '#1a1a1a',  // primary text
   inkMuted:     '#5a5a5a',  // secondary text, citations
-  inkFaint:     '#8a8a8a',  // metadata, page numbers
+  inkFaint:     '#767676',  // metadata, page numbers (darkened from #8a8a8a for WCAG AA 4.5:1)
 
   // Semantic (left-border accents, small pills — never text highlights)
   method:       '#4a6fa5',  // process, pipeline, how-it-works (cool blue)

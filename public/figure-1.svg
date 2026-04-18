@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 320" width="900" height="320">
+  <defs>
+    <!-- Warm palette colors from theme -->
+    <linearGradient id="methodGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4a6fa5;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#4a6fa5;stop-opacity:0.05"/>
+    </linearGradient>
+    <linearGradient id="findingGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6b8e4e;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#6b8e4e;stop-opacity:0.05"/>
+    </linearGradient>
+
+    <!-- Arrow marker -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#8a8a8a"/>
+    </marker>
+    <marker id="arrowAccent" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c4924a"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="320" rx="8" fill="#faf8f3"/>
+
+  <!-- Title -->
+  <text x="450" y="28" text-anchor="middle" font-family="Georgia,serif" font-size="16" fill="#1a1a1a" font-weight="bold">Figure 1: The Pipeline — From A/B Tests to Testable Hypotheses</text>
+  <text x="450" y="44" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#8a8a8a">Redrawn from the paper (p.3) in the project's warm palette. Semantic colors match the reading experience.</text>
+
+  <!-- === STAGE 1: DATA === -->
+  <g transform="translate(30, 65)">
+    <rect width="140" height="90" rx="6" fill="url(#methodGrad)" stroke="#4a6fa5" stroke-width="1.5"/>
+    <rect x="0" y="0" width="4" height="90" rx="2" fill="#4a6fa5"/>
+    <text x="75" y="24" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#4a6fa5">DATA</text>
+    <text x="75" y="42" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#1a1a1a">Upworthy Archive</text>
+    <text x="75" y="58" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#5a5a5a">32k A/B tests</text>
+    <text x="75" y="72" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#5a5a5a">60k+ headlines</text>
+  </g>
+
+  <!-- Arrow 1 -->
+  <line x1="175" y1="110" x2="208" y2="110" stroke="#8a8a8a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- === STAGE 2: PREPARE === -->
+  <g transform="translate(215, 65)">
+    <rect width="140" height="90" rx="6" fill="url(#methodGrad)" stroke="#4a6fa5" stroke-width="1.5"/>
+    <rect x="0" y="0" width="4" height="90" rx="2" fill="#4a6fa5"/>
+    <text x="75" y="24" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#4a6fa5">PREPARE</text>
+    <text x="75" y="42" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#1a1a1a">Shrinkage + ∆CTR</text>
+    <text x="75" y="58" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#5a5a5a">Smooth noisy CTRs</text>
+    <text x="75" y="72" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#5a5a5a">Eq. 1 → pair-level ∆</text>
+  </g>
+
+  <!-- Arrow 2 -->
+  <line x1="360" y1="110" x2="393" y2="110" stroke="#8a8a8a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- === STAGE 3: MODEL === -->
+  <g transform="translate(400, 65)">
+    <rect width="140" height="90" rx="6" fill="url(#methodGrad)" stroke="#4a6fa5" stroke-width="1.5"/>
+    <rect x="0" y="0" width="4" height="90" rx="2" fill="#4a6fa5"/>
+    <text x="75" y="24" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#4a6fa5">MODEL</text>
+    <text x="75" y="42" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#1a1a1a">Siamese Network</text>
+    <text x="75" y="58" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#5a5a5a">MPNet embeddings</text>
+    <text x="75" y="72" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#5a5a5a">R²: 0.04 → 0.13</text>
+  </g>
+
+  <!-- Arrow 3 (down to Generate row) -->
+  <path d="M 470 160 L 470 180" stroke="#8a8a8a" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+
+  <!-- === STAGE 4: GENERATE === -->
+  <g transform="translate(400, 190)">
+    <rect width="140" height="90" rx="6" fill="url(#methodGrad)" stroke="#c4924a" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <rect x="0" y="0" width="4" height="90" rx="2" fill="#c4924a"/>
+    <text x="75" y="24" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#c4924a">GENERATE</text>
+    <text x="75" y="42" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#1a1a1a">GPT-4 + prompts</text>
+    <text x="75" y="58" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#5a5a5a">288 configurations</text>
+    <text x="75" y="72" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#5a5a5a">→ 2,100 hypotheses</text>
+  </g>
+
+  <!-- Arrow 4 -->
+  <line x1="545" y1="235" x2="578" y2="235" stroke="#8a8a8a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- === STAGE 5: RANK === -->
+  <g transform="translate(585, 190)">
+    <rect width="140" height="90" rx="6" fill="url(#methodGrad)" stroke="#c4924a" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <rect x="0" y="0" width="4" height="90" rx="2" fill="#c4924a"/>
+    <text x="75" y="24" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#c4924a">RANK</text>
+    <text x="75" y="42" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#1a1a1a">Morph + Score</text>
+    <text x="75" y="58" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#5a5a5a">252k headline morphs</text>
+    <text x="75" y="72" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#5a5a5a">Predict ∆CTR per hyp</text>
+  </g>
+
+  <!-- Arrow 5 -->
+  <line x1="730" y1="235" x2="763" y2="235" stroke="#8a8a8a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- === STAGE 6: FILTER === -->
+  <g transform="translate(770, 190)">
+    <rect width="110" height="90" rx="6" fill="url(#findingGrad)" stroke="#6b8e4e" stroke-width="1.5"/>
+    <rect x="0" y="0" width="4" height="90" rx="2" fill="#6b8e4e"/>
+    <text x="58" y="24" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#6b8e4e">FILTER</text>
+    <text x="58" y="42" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#1a1a1a">De-dup + FDR</text>
+    <text x="58" y="58" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#5a5a5a">2,100 → 205 → 16</text>
+    <text x="58" y="72" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#5a5a5a">→ 6 pre-registered</text>
+  </g>
+
+  <!-- === OUTPUT: TEST === -->
+  <g transform="translate(770, 65)">
+    <rect width="110" height="90" rx="6" fill="url(#findingGrad)" stroke="#6b8e4e" stroke-width="2"/>
+    <rect x="0" y="0" width="4" height="90" rx="2" fill="#6b8e4e"/>
+    <text x="58" y="24" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#6b8e4e">TEST</text>
+    <text x="58" y="42" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#1a1a1a">Studies 1 &amp; 2</text>
+    <text x="58" y="58" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#5a5a5a">1,600 A/B tests</text>
+    <text x="58" y="72" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#5a5a5a">5,000+ social posts</text>
+  </g>
+
+  <!-- Arrow: Filter up to Test -->
+  <path d="M 825 185 L 825 160" stroke="#6b8e4e" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+
+  <!-- Legend -->
+  <g transform="translate(30, 290)">
+    <rect width="12" height="12" rx="2" fill="#4a6fa5" opacity="0.3" stroke="#4a6fa5"/>
+    <text x="18" y="10" font-family="system-ui,sans-serif" font-size="9" fill="#5a5a5a">Method/process</text>
+    <rect x="110" y="0" width="12" height="12" rx="2" fill="#6b8e4e" opacity="0.3" stroke="#6b8e4e"/>
+    <text x="128" y="10" font-family="system-ui,sans-serif" font-size="9" fill="#5a5a5a">Findings/output</text>
+    <rect x="210" y="0" width="12" height="12" rx="2" fill="none" stroke="#c4924a" stroke-dasharray="3,2"/>
+    <text x="228" y="10" font-family="system-ui,sans-serif" font-size="9" fill="#5a5a5a">Interactive in playground</text>
+  </g>
+</svg>

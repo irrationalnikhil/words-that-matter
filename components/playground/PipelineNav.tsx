@@ -32,7 +32,7 @@ export default function PipelineNav({ currentStage, onStageChange }: PipelineNav
             <span
               className={`flex items-center justify-center w-5 h-5 rounded-full text-xs font-mono ${
                 currentStage === stage.number
-                  ? 'bg-accent text-white'
+                  ? 'bg-accent text-ink'
                   : currentStage > stage.number
                   ? 'bg-finding/20 text-finding'
                   : 'bg-paper-deep text-ink-faint'

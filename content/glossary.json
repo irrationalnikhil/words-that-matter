@@ -1,0 +1,164 @@
+{
+  "ab-test": {
+    "term": "A/B test",
+    "plainEnglish": "A randomized experiment comparing two variants (A and B) to see which performs better on a chosen metric. Each visitor is randomly assigned to one variant, so differences in outcomes can be attributed to the variant itself rather than confounding factors.",
+    "firstUseIn": "abstract",
+    "authoritativeSource": {
+      "citation": "Kohavi et al., 2009",
+      "url": "https://doi.org/10.1145/1557019.1557139"
+    }
+  },
+  "ctr": {
+    "term": "Click-through rate (CTR)",
+    "plainEnglish": "The fraction of people who click on a link after seeing it: clicks divided by impressions. A CTR of 0.05 means 5% of people who saw the headline clicked it.",
+    "firstUseIn": "2.1",
+    "authoritativeSource": {
+      "citation": "Standard industry metric",
+      "url": "https://en.wikipedia.org/wiki/Click-through_rate"
+    }
+  },
+  "siamese-network": {
+    "term": "Siamese network",
+    "plainEnglish": "Two copies of the same neural network that share weights. You feed one input to each copy, then compare the two outputs. Useful when you care about the relationship between two things rather than classifying one thing.",
+    "firstUseIn": "2.2",
+    "authoritativeSource": {
+      "citation": "Bromley et al., 1993",
+      "url": "https://proceedings.neurips.cc/paper/1993/hash/288cc0ff022877bd3df94bc9360b9c5d-Abstract.html"
+    }
+  },
+  "mpnet": {
+    "term": "MPNet",
+    "plainEnglish": "A transformer-based language model that combines masked language modeling (predicting hidden words) with permuted language modeling (predicting words in shuffled order). It produces high-quality sentence representations used here to embed headlines as vectors.",
+    "firstUseIn": "2.2",
+    "authoritativeSource": {
+      "citation": "Song et al., 2020",
+      "url": "https://arxiv.org/abs/2004.09297"
+    }
+  },
+  "sentence-embedding": {
+    "term": "Sentence embedding",
+    "plainEnglish": "A fixed-length list of numbers (a vector) that captures a sentence's meaning. Similar sentences end up with similar vectors, which lets you measure semantic similarity mathematically.",
+    "firstUseIn": "2.2",
+    "authoritativeSource": {
+      "citation": "Reimers & Gurevych, 2019",
+      "url": "https://arxiv.org/abs/1908.10084"
+    }
+  },
+  "shrinkage": {
+    "term": "Shrinkage / smoothed CTR",
+    "plainEnglish": "A technique for pulling noisy estimates toward the overall average when you have little data. If a headline was shown to only 10 people, its raw CTR is unreliable. Shrinkage blends it with the grand mean, trusting small samples less. As sample size grows, the smoothed value converges to the raw value.",
+    "firstUseIn": "2.1",
+    "authoritativeSource": {
+      "citation": "James & Stein, 1961",
+      "url": "https://en.wikipedia.org/wiki/Stein%27s_example"
+    }
+  },
+  "ols": {
+    "term": "OLS regression",
+    "plainEnglish": "Ordinary least squares — the standard method for fitting a straight line (or plane) through data points. It finds the coefficients that minimize the sum of squared differences between predicted and actual values.",
+    "firstUseIn": "2.2",
+    "authoritativeSource": {
+      "citation": "Standard statistical method",
+      "url": "https://en.wikipedia.org/wiki/Ordinary_least_squares"
+    }
+  },
+  "r-squared": {
+    "term": "R²",
+    "plainEnglish": "The proportion of variance in the outcome that the model explains, ranging from 0 (explains nothing) to 1 (explains everything). An R² of 0.13 means the model captures 13% of the variation in click-through rate differences.",
+    "firstUseIn": "2.2",
+    "authoritativeSource": {
+      "citation": "Standard statistical measure",
+      "url": "https://en.wikipedia.org/wiki/Coefficient_of_determination"
+    }
+  },
+  "f-statistic": {
+    "term": "F-statistic",
+    "plainEnglish": "A ratio comparing how much variance a model explains versus how much it leaves unexplained. A larger F means the model is capturing meaningfully more signal. The authors' F(1, 1690) = 169.4 means the ML model adds substantial predictive power beyond the BU model.",
+    "firstUseIn": "2.2",
+    "authoritativeSource": {
+      "citation": "Standard statistical test",
+      "url": "https://en.wikipedia.org/wiki/F-test"
+    }
+  },
+  "fdr": {
+    "term": "Benjamini-Hochberg / FDR",
+    "plainEnglish": "When you test many hypotheses at once, some will appear significant just by chance. The Benjamini-Hochberg procedure controls the expected proportion of false discoveries among all discoveries (the false discovery rate). It's less conservative than Bonferroni correction.",
+    "firstUseIn": "2.3",
+    "authoritativeSource": {
+      "citation": "Benjamini & Hochberg, 1995",
+      "url": "https://www.jstor.org/stable/2346101"
+    }
+  },
+  "euclidean-distance": {
+    "term": "Euclidean distance",
+    "plainEnglish": "The straight-line distance between two points (or vectors) in space. Used here to measure how different two hypotheses are: if their embedding vectors are closer than 0.03, they're considered redundant.",
+    "firstUseIn": "2.3",
+    "authoritativeSource": {
+      "citation": "Standard mathematical concept",
+      "url": "https://en.wikipedia.org/wiki/Euclidean_distance"
+    }
+  },
+  "pre-registration": {
+    "term": "Pre-registration",
+    "plainEnglish": "Publicly committing to your hypotheses, sample size, and analysis plan before collecting or looking at the data. This prevents researchers from unconsciously tweaking their analysis until they find a significant result. The authors used AsPredicted.org.",
+    "firstUseIn": "2.4",
+    "authoritativeSource": {
+      "citation": "Nosek et al., 2018",
+      "url": "https://doi.org/10.1073/pnas.1708274114"
+    }
+  },
+  "harking": {
+    "term": "HARKing",
+    "plainEnglish": "Hypothesizing After the Results are Known — formulating a hypothesis after you've already seen the data, then presenting it as if it were predicted in advance. Pre-registration is designed to prevent this.",
+    "firstUseIn": "2.4",
+    "authoritativeSource": {
+      "citation": "Kerr, 1998",
+      "url": "https://journals.sagepub.com/doi/10.1207/s15327957pspr0203_4"
+    }
+  },
+  "p-hacking": {
+    "term": "p-hacking",
+    "plainEnglish": "Trying many different analyses, variable definitions, or subgroups until one produces a statistically significant result (p < .05). This inflates false-positive rates because with enough tries, random noise will look like a real effect.",
+    "firstUseIn": "2.4",
+    "authoritativeSource": {
+      "citation": "Simmons, Nelson & Simonsohn, 2011",
+      "url": "https://doi.org/10.1177/0956797611417632"
+    }
+  },
+  "liwc": {
+    "term": "LIWC",
+    "plainEnglish": "Linguistic Inquiry and Word Count — a text-analysis tool that counts words falling into psychological categories (e.g., positive emotion, cognitive processes, social references). The BU model uses LIWC-derived features as predictors.",
+    "firstUseIn": "2.2",
+    "authoritativeSource": {
+      "citation": "Pennebaker et al., 2015",
+      "url": "https://www.liwc.app/"
+    }
+  },
+  "hypothesis-morphing": {
+    "term": "Hypothesis morphing",
+    "plainEnglish": "The paper's term for rewriting a headline to incorporate a hypothesized feature while keeping the story content the same. For example, if the hypothesis is 'describing physical reactions increases engagement,' a morph would rewrite a headline to include a physical reaction. 252,000 morphs were generated.",
+    "firstUseIn": "2.3",
+    "authoritativeSource": {
+      "citation": "This paper (Batista & Ross, 2024)",
+      "url": "https://openreview.net/pdf?id=pvnXlajGBZ"
+    }
+  },
+  "upworthy-research-archive": {
+    "term": "Upworthy Research Archive",
+    "plainEnglish": "A public dataset of 32,487 headline A/B tests run by the media company Upworthy between 2013 and 2015. Each experiment tested multiple headline variants for the same story, with click-through rate as the outcome. It's one of the largest public datasets of real-world messaging experiments.",
+    "firstUseIn": "2.1",
+    "authoritativeSource": {
+      "citation": "Matias et al., 2021",
+      "url": "https://www.nature.com/articles/s41597-021-00934-7"
+    }
+  },
+  "gpt-4": {
+    "term": "GPT-4",
+    "plainEnglish": "A large language model by OpenAI, used by the authors to generate hypotheses from headline pairs and to produce counterfactual headline morphs. The authors chose GPT-4 for its ability to follow complex prompts and produce structured outputs.",
+    "firstUseIn": "2.3",
+    "authoritativeSource": {
+      "citation": "OpenAI, 2023",
+      "url": "https://openai.com/research/gpt-4"
+    }
+  }
+}

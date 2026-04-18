@@ -1,0 +1,144 @@
+{
+  "_meta": {
+    "description": "Hypotheses from the paper's pipeline: 2,100 generated → 205 after dedup → 16 significant → 6 pre-registered. Table 1 examples included; full set on OSF.",
+    "source": "Table 1 (paper) + OSF https://osf.io/d5xvb/",
+    "status": "partial — Table 1 examples only"
+  },
+  "examples": [
+    {
+      "id": "h-1",
+      "headlineA": "A Holocaust Survivor's Compassionate Message To The German Population",
+      "headlineB": "A 90-Second Message From A 90-Year-Old Holocaust Survivor",
+      "hypothesis": "Specifying the length of content in the headline results in more engagement with a message",
+      "direction": "positive",
+      "source": "Table 1, p.10"
+    },
+    {
+      "id": "h-2",
+      "headlineA": "These Kids Don't Pass Go And They Don't Collect $200.",
+      "headlineB": "Behind These Numbers Sit Really Sad Truths About Our Justice System - And Some Really Young People",
+      "hypothesis": "Incorporating emotional language results in more engagement with a message.",
+      "direction": "positive",
+      "source": "Table 1, p.10"
+    },
+    {
+      "id": "h-3",
+      "headlineA": "It's Probably Your 2nd Favorite Thing To Do And Now Science Wants You To Do More Of It",
+      "headlineB": "If You Think It Feels Great, You Should See What Else It's Doing To You",
+      "hypothesis": "Framing a message to highlight unexpected benefits increases engagement with a message.",
+      "direction": "positive",
+      "source": "Table 1, p.10"
+    },
+    {
+      "id": "h-4",
+      "headlineA": "I Used To Think Adaptation Was A Good Thing Until I Realized How Humans Do It",
+      "headlineB": "Baby Polar Bear: 'What Use Is All This Fur If There's No Ice?' Mama Bear: 'Hush Up And Adapt'.",
+      "hypothesis": "Personifying animals in the messaging affects engagement with a message.",
+      "direction": "positive",
+      "source": "Table 1, p.10"
+    },
+    {
+      "id": "h-5",
+      "headlineA": "She Wanted To Make Sure Everyone Knew That Her Baby Was A Boy. So She Dressed Him In Pink.",
+      "headlineB": "She Wants Everyone To Know That She's A Proud Mother Of A Boy, So She Dresses Him In Pink",
+      "hypothesis": "Using past tense instead of present tense decreases engagement with a message.",
+      "direction": "negative",
+      "source": "Table 1, p.10"
+    },
+    {
+      "id": "h-6",
+      "headlineA": "Elizabeth Warren Forced To Lecture Bank Regulator Like He's A Child Who Did Something Awful",
+      "headlineB": "Elizabeth Warren Teaches A Bank Regulator How To Do His Job Like A Big Boy",
+      "hypothesis": "Using a condescending tone decreases engagement with a message.",
+      "direction": "negative",
+      "source": "Table 1, p.10"
+    }
+  ],
+  "preRegistered": [
+    {
+      "id": "pr-1",
+      "shorthand": "surprise, cliffhanger",
+      "hypothesis": "Includes element of surprise followed by cliffhanger",
+      "predictedDirection": "positive",
+      "study1_p": 0.297,
+      "study1_significant": false,
+      "study2_p": null,
+      "study2_significant": false,
+      "study2_note": "null effect",
+      "noveltyCheck_p": null,
+      "noveltyCheck_significant": false
+    },
+    {
+      "id": "pr-2",
+      "shorthand": "parody",
+      "hypothesis": "Incorporates parody",
+      "predictedDirection": "positive",
+      "study1_p": 0.094,
+      "study1_significant": false,
+      "study2_p": null,
+      "study2_significant": false,
+      "study2_note": "not reported as significant",
+      "noveltyCheck_p": null,
+      "noveltyCheck_significant": false
+    },
+    {
+      "id": "pr-3",
+      "shorthand": "multimedia evidence",
+      "hypothesis": "Refers to multimedia evidence",
+      "predictedDirection": "positive",
+      "study1_p": 0.046,
+      "study1_significant": true,
+      "study2_p": "<.01",
+      "study2_significant": true,
+      "study2_note": "effect in OPPOSITE direction",
+      "noveltyCheck_p": "<.001",
+      "noveltyCheck_significant": true
+    },
+    {
+      "id": "pr-4",
+      "shorthand": "physical reaction",
+      "hypothesis": "Describes physical reaction",
+      "predictedDirection": "positive",
+      "study1_p": 0.033,
+      "study1_significant": true,
+      "study2_p": "<.01",
+      "study2_significant": true,
+      "study2_note": "consistent direction",
+      "noveltyCheck_p": null,
+      "noveltyCheck_significant": false
+    },
+    {
+      "id": "pr-5",
+      "shorthand": "short, simple phrases",
+      "hypothesis": "Short and simple phrases",
+      "predictedDirection": "negative",
+      "study1_p": "<.001",
+      "study1_significant": true,
+      "study2_p": "<.01",
+      "study2_significant": true,
+      "study2_note": "consistent direction",
+      "noveltyCheck_p": null,
+      "noveltyCheck_significant": false
+    },
+    {
+      "id": "pr-6",
+      "shorthand": "positive human behavior",
+      "hypothesis": "Focus on positive aspects of human behavior",
+      "predictedDirection": "negative",
+      "study1_p": "<.001",
+      "study1_significant": true,
+      "study2_p": "<.01",
+      "study2_significant": true,
+      "study2_note": "consistent direction",
+      "noveltyCheck_p": "<.001",
+      "noveltyCheck_significant": true
+    }
+  ],
+  "funnelCounts": {
+    "generated": 2100,
+    "afterDedup": 205,
+    "significant": 16,
+    "preRegistered": 6,
+    "dedupThreshold": 0.03
+  }
+}

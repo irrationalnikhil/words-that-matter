@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Warm off-white reading surface */
+  html {
+    background-color: #faf8f3;
+    color: #1a1a1a;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Respect reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Semantic blockquote styling */
+  blockquote {
+    font-family: var(--font-lora), Georgia, serif;
+  }
+
+  /* KaTeX overrides for warm palette */
+  .katex {
+    font-size: 1.05em;
+  }
+}
+
+@layer utilities {
+  /* Simple fade-in for popovers and interactives */
+  .animate-in {
+    animation: fadeIn 150ms ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@layer components {
+  /* Reading column — reusable constraint */
+  .reading-column {
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  /* Semantic left-border accent */
+  .border-accent-method  { border-left: 3px solid #4a6fa5; }
+  .border-accent-finding { border-left: 3px solid #6b8e4e; }
+  .border-accent-caveat  { border-left: 3px solid #b85c38; }
+  .border-accent-novel   { border-left: 3px solid #8b6bb1; }
+
+  /* Annotated edition layout: reading column on mobile, wider on desktop for margin rail */
+  .annotated-layout {
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  @media (min-width: 1024px) {
+    .annotated-layout {
+      max-width: calc(680px + 280px + 1.5rem); /* reading + rail + gap */
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .annotated-layout {
+      padding-left: calc((100vw - 680px - 280px - 1.5rem) / 2);
+    }
+  }
+}

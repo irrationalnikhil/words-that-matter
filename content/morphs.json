@@ -1,0 +1,51 @@
+{
+  "_meta": {
+    "description": "Headline morphs from Table 2 — original headlines rewritten to incorporate a hypothesized feature. 252,000 were generated total; these are the published examples.",
+    "source": "Table 2 (paper p.11) + OSF https://osf.io/d5xvb/",
+    "status": "partial — Table 2 examples only"
+  },
+  "examples": [
+    {
+      "id": "m-1",
+      "hypothesis": "Incorporating emotional triggers and a geographic reference into a headline affects engagement with a message.",
+      "original": "That Cheap Stuff I Just Bought At Walmart? Turns Out, It Cost Me $6000 More Than I Thought",
+      "morph": "Local Man's Walmart Bargain Turns Nightmare: Hidden Costs Rack Up $6000!",
+      "source": "Table 2, p.11"
+    },
+    {
+      "id": "m-2",
+      "hypothesis": "Personalizing a message by focusing on an individual's story or reaction makes people more likely to engage with a message.",
+      "original": "11 Tweets That Sum Up The Horror In North Carolina",
+      "morph": "North Carolina Resident's Heartwrenching Reaction Captures the Horror in 11 Tweets",
+      "source": "Table 2, p.11"
+    },
+    {
+      "id": "m-3",
+      "hypothesis": "Excessive sensationalism and vague phrasing leads to less engagement with a message.",
+      "original": "An 11-year old ate a burger with a surprise ingredient. It was fatal, but ok according to the FDA.",
+      "morph": "11-Year-Old's Fatal Reaction to FDA-Approved Burger Ingredient Sparks Outrage",
+      "source": "Table 2, p.11"
+    },
+    {
+      "id": "m-4",
+      "hypothesis": "Introducing a narrative arc and highlighting societal themes leads to more engagement with a message.",
+      "original": "A woman shares some thoughts on why 'being normal' isn't all it's cracked up to be.",
+      "morph": "A Brave Woman's Journey From Conforming to Defying Society: Why Rejecting 'Normal' Opens the Door to True Self-Discovery",
+      "source": "Table 2, p.11"
+    },
+    {
+      "id": "m-5",
+      "hypothesis": "Introducing a sense of mystery or unresolved tension affects engagement with a message.",
+      "original": "A Haunting Photo Of Martin Luther King Jr. Plus His Immortal Audio Clip",
+      "morph": "Discover the Mystery Behind Martin Luther King Jr.'s Last Haunting Photo and Immortal Words",
+      "source": "Table 2, p.11"
+    },
+    {
+      "id": "m-6",
+      "hypothesis": "Introducing an element of surprise and emphasizing the impact of unawareness leads to more engagement with a message.",
+      "original": "Food Stamps Cannot Be Used To Buy Weapons. Except In Alaska.",
+      "morph": "You Thought Food Stamps Were Just for Groceries? Guess Again, Especially in Alaska!",
+      "source": "Table 2, p.11"
+    }
+  ]
+}

@@ -1,0 +1,446 @@
+{
+  "title": "Words that Work: Using Language to Generate Hypotheses",
+  "authors": ["Rafael M. Batista", "James Ross"],
+  "venue": "38th Conference on Neural Information Processing Systems (NeurIPS 2024)",
+  "year": 2024,
+  "sections": [
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "paragraphs": [
+        {
+          "id": "p-abstract-1",
+          "text": "In this paper, we examine how specific features of language drive consumer behavior. Our contribution, however, lies not in testing specific hypotheses; rather, it is in demonstrating a data-driven process for generating them. We devise an approach that generates interpretable hypotheses from text by integrating large-language models (LLMs), machine learning (ML), and psychology experiments. Using a dataset with over 60,000 headlines (and over 32,000 A/B tests), we produce human-interpretable hypotheses about what features of language might affect engagement. We then test a subset of these hypotheses out-of-sample using two datasets: one consisting of 1,600 A/B tests and another containing over 5,000 social media posts. Our approach indeed facilitates discovery. For instance, we find that describing physical reactions significantly increases engagement. In contrast, focusing on positive aspects of human behavior decreases it. This approach extends beyond a single application. In general, it offers a data-driven method for discovery that can convert unstructured text data into insights that are interpretable, novel, testable, and generalizable. It does so while maintaining a transparent role for both human researchers and algorithmic processes. This approach offers a practical tool to researchers, organizations, and policymakers seeking to aggregate insights from multiple marketing experiments.",
+          "category": "novel"
+        }
+      ]
+    },
+    {
+      "id": "1",
+      "title": "Introduction",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "paragraphs": [
+        {
+          "id": "p-1-1",
+          "text": "Language shapes people's beliefs and motivates behavior [e.g., 35, 34, 26, 15]. But what is it exactly about everyday messages that drive behavior? Many theories begin to answer this. But the space of possible insights is vast, and discoveries take time, relying on both human creativity and trial-and-error to come up with and then test one hypothesis at a time. How can we efficiently explore the space of testable hypotheses? Recent advances in machine learning (ML) can help [42], but often at the cost of interpretability and understanding [33].",
+          "category": null
+        },
+        {
+          "id": "p-1-2",
+          "text": "We present a process for generating novel and interpretable hypotheses from text by combining large-language models (LLMs), ML, and choice experiments. Our process begins with a corpus of text and an outcome of interest and outputs a set of hypotheses that are interpretable, testable, novel, and generalizable to other contexts. Two studies test the hypotheses discovered across many A/B tests conducted by two organizations, providing evidence of their effects. In doing so, we also provide organizations and policymakers with a process for aggregating insights from several A/B tests.",
+          "category": "novel"
+        },
+        {
+          "id": "p-1-3",
+          "text": "This paper is about discovering what features of language drive everyday judgments and decisions. Our contribution, however, is not in testing a specific hypothesis; it is in demonstrating a data-driven process for generating one.",
+          "category": "novel"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Method",
+      "pageStart": 2,
+      "pageEnd": 4,
+      "paragraphs": []
+    },
+    {
+      "id": "2.1",
+      "title": "Data preparation",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "paragraphs": [
+        {
+          "id": "p-2.1-1",
+          "text": "We use the Upworthy Research Archive [31], public data containing headline text and click-through rate (CTR) for 32k experiments (A/B tests). To avoid overfitting, we split the data (40% training, 10% morphing, 10% regression, 40% lockbox). Given the experimental setup of the data, we decided to produce our analysis at the pair level, where each observation consists of a pair of headlines. We collected all pairs of headlines Ha and Hb that appeared in the same trial.",
+          "category": "method",
+          "termAnchors": [
+            {
+              "term": "Upworthy Research Archive",
+              "offset": 11,
+              "length": 25,
+              "definitionKey": "upworthy-research-archive"
+            },
+            {
+              "term": "click-through rate (CTR)",
+              "offset": 72,
+              "length": 23,
+              "definitionKey": "ctr"
+            },
+            {
+              "term": "A/B tests",
+              "offset": 113,
+              "length": 9,
+              "definitionKey": "ab-test"
+            }
+          ],
+          "marginNotes": [
+            {
+              "kind": "cross-ref",
+              "content": "The data split is important: the 40% lockbox is what makes Studies 1 & 2 credible — the hypotheses were never tested on this data during generation."
+            }
+          ]
+        },
+        {
+          "id": "p-2.1-2",
+          "text": "The outcome we care about in this application is the click-through rate (CTR). For each headline, the CTR is defined as CTR = Clicks / Impressions. To account for variability in CTRs arising from trials of different sizes, we employed a shrinkage procedure toward the overall average CTR:",
+          "category": "method",
+          "termAnchors": [
+            {
+              "term": "shrinkage",
+              "offset": 200,
+              "length": 9,
+              "definitionKey": "shrinkage"
+            }
+          ],
+          "equations": [
+            {
+              "id": "eq-1",
+              "latex": "\\text{Smoothed CTR}_a = \\frac{\\text{Clicks}_a + \\overline{\\text{CTR}}}{\\text{Impressions}_a + 1}",
+              "label": "Eq. 1",
+              "interactive": "shrinkage"
+            }
+          ]
+        },
+        {
+          "id": "p-2.1-3",
+          "text": "where CTR was the mean CTR calculated across all headlines. Finally, we defined our outcome of interest to be the difference in CTR:",
+          "category": "method",
+          "equations": [
+            {
+              "id": "eq-2",
+              "latex": "\\Delta\\text{CTR}_{a,b} = \\text{Smoothed CTR}_b - \\text{Smoothed CTR}_a",
+              "label": "Eq. 2",
+              "interactive": "ctr-delta"
+            }
+          ]
+        },
+        {
+          "id": "p-2.1-4",
+          "text": "For simplicity, we refer to Smoothed CTR as CTR in the remainder of this paper.",
+          "category": "method"
+        }
+      ]
+    },
+    {
+      "id": "2.2",
+      "title": "Modeling",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "paragraphs": [
+        {
+          "id": "p-2.2-1",
+          "text": "To motivate our work, we build on [6]. Using this data, they extract over 50 psychological features (e.g., LIWC, TextAnalyzer) and test for their effect on CTR. For each of the 51 psychological constructs used in Bannerjee and Urminky's analyses, we take the difference in construct values between the headlines in each pair. The result is 51 features defined as the difference in a psychological construct (such as reading ease, numeric reference, or visual language). We then estimate an OLS regression of the form",
+          "category": "method",
+          "termAnchors": [
+            {
+              "term": "LIWC",
+              "offset": 101,
+              "length": 4,
+              "definitionKey": "liwc"
+            },
+            {
+              "term": "OLS regression",
+              "offset": 448,
+              "length": 14,
+              "definitionKey": "ols"
+            }
+          ],
+          "equations": [
+            {
+              "id": "eq-3",
+              "latex": "\\Delta\\text{CTR}_{a,b} = \\beta_0 + \\sum_{i=1}^{51} \\beta_i \\cdot \\Delta\\text{Rating}^i_{a,b} + \\varepsilon_{a,b}",
+              "label": "Eq. 3"
+            }
+          ]
+        },
+        {
+          "id": "p-2.2-2",
+          "text": "which we will call the 'BU model.'",
+          "category": "method"
+        },
+        {
+          "id": "p-2.2-3",
+          "text": "We then train an ML algorithm to predict \u0394CTRa,b, to explore whether it outperforms the model from (3). We employ a Siamese network architecture [13], initializing with a pre-trained MPNet model [40] to convert each headline into a vector of length 768. We then take the difference between these vectors, and add a randomly-initialized, fully-connected linear layer, which outputs a single value. The underlying embedding model and the final regression layer are then simultaneously fine-tuned using a standard gradient descent approach, to improve the performance in predicting \u0394CTR.",
+          "category": "method",
+          "termAnchors": [
+            {
+              "term": "Siamese network",
+              "offset": 106,
+              "length": 15,
+              "definitionKey": "siamese-network"
+            },
+            {
+              "term": "MPNet",
+              "offset": 156,
+              "length": 5,
+              "definitionKey": "mpnet"
+            },
+            {
+              "term": "sentence embedding",
+              "offset": 199,
+              "length": 0,
+              "definitionKey": "sentence-embedding"
+            }
+          ]
+        },
+        {
+          "id": "p-2.2-4",
+          "text": "We compared the out-of-sample predictions of the BU model (R\u00b2 = 0.04) to one that included the prediction from an ML algorithm we trained using each headline's sentence embedding (R\u00b2 = 0.13). Indeed, the ML predictions improved the performance, F(1, 1690) = 169.4, p < .001. This suggests there is signal in the text to be discovered.",
+          "category": "finding",
+          "termAnchors": [
+            {
+              "term": "R\u00b2",
+              "offset": 61,
+              "length": 2,
+              "definitionKey": "r-squared"
+            },
+            {
+              "term": "F-statistic",
+              "offset": 0,
+              "length": 0,
+              "definitionKey": "f-statistic"
+            }
+          ],
+          "marginNotes": [
+            {
+              "kind": "caveat",
+              "content": "R\u00b2 of 0.13 is still not high \u2014 most variation in \u0394CTR is unexplained. The point is relative improvement, not absolute predictive power."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2.3",
+      "title": "Hypothesis Generation",
+      "pageStart": 2,
+      "pageEnd": 3,
+      "paragraphs": [
+        {
+          "id": "p-2.3-1",
+          "text": "To generate interpretable hypotheses from this data, we devised a set of steps that used the headlines to extract a set of features, then sorted them using \u201cpredicted\u201d effects obtained with the ML algorithm. Figure 1 gives a graphical overview of the steps, and the full prompts for these steps are included in the Appendix Section A.2.",
+          "category": "method"
+        },
+        {
+          "id": "p-2.3-2",
+          "text": "The first step extracted features. We provided GPT-4 with pairs of headlines written for the same story and indicated which had the higher CTR. The prompt then elicited a feature that fits the format: \u201cHypothesis: ______ [increases/decreases] engagement with a message.\u201d This step produced 2,100 interpretable hypotheses (which human raters, n = 79, also believed to be good quality). A sample of hypotheses is shown in Table 1.",
+          "category": "method",
+          "termAnchors": [
+            {
+              "term": "GPT-4",
+              "offset": 56,
+              "length": 5,
+              "definitionKey": "gpt-4"
+            }
+          ],
+          "marginNotes": [
+            {
+              "kind": "appendix-promo",
+              "content": "**Table 1** has example headline pairs and the hypotheses GPT-4 generated from them. See the full set at the bottom of this page."
+            }
+          ]
+        },
+        {
+          "id": "p-2.3-3",
+          "text": "The next step combined GPT and the ML algorithm to produce predicted effects for each hypothesized feature. First, we produced 252,000 counterfactual headlines (\u201cmorphs\u201d) by having GPT rewrite a set of Upworthy headlines to incorporate each feature. Each morph was based on one actual headline and one of the hypotheses. We then used the ML algorithm to predict the difference in CTR between each morph and the original headline it was based on\u2014i.e., each pair had a predicted treatment effect, which we aggregated at the hypothesis level. By applying the hypotheses to many different headlines and predicting their effect, we get a sense of how generalizable it is (e.g., it\u2019s unlikely that a very specific feature would produce a large effect on average). This step incorporated the ML signal and an element of generalizability to rank-order the hypotheses. A sample of headline morphs is shown in Table 2.",
+          "category": "novel",
+          "termAnchors": [
+            {
+              "term": "hypothesis morphing",
+              "offset": 0,
+              "length": 0,
+              "definitionKey": "hypothesis-morphing"
+            }
+          ],
+          "marginNotes": [
+            {
+              "kind": "appendix-promo",
+              "content": "**Table 2** shows example morphs \u2014 original headlines rewritten to incorporate a hypothesized feature. See the full set at the bottom of this page."
+            }
+          ]
+        },
+        {
+          "id": "p-2.3-4",
+          "text": "The last step narrowed the set. First, for each hypothesis we calculated the average difference between embedding vectors for associated headline and morph pairs, producing a single embedding vector for each hypothesis. We then ranked hypotheses by the score calculated in the previous step. Finally, working from highest to lowest scores, we selected hypotheses that had a Euclidean distance greater than 0.03 from previously selected hypotheses. Finally, we tested whether the predicted treatment effects of the remaining 205 hypotheses were significantly different from 0 (after applying a correction to control for false discovery rates [8]). Sixteen hypotheses had significant, positive predicted effects (p<.05). With hypotheses in hand, we tested them in two studies.",
+          "category": "method",
+          "termAnchors": [
+            {
+              "term": "Euclidean distance",
+              "offset": 313,
+              "length": 18,
+              "definitionKey": "euclidean-distance"
+            },
+            {
+              "term": "false discovery rates",
+              "offset": 507,
+              "length": 21,
+              "definitionKey": "fdr"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2.4",
+      "title": "Hypothesis Testing",
+      "pageStart": 3,
+      "pageEnd": 4,
+      "paragraphs": [
+        {
+          "id": "p-2.4-1",
+          "text": "To test our hypotheses \u2014 and assuage any concerns of overfitting or p-hacking [39, 43] \u2014 we pre-registered the six hypotheses and conducted all of our tests out of sample, on data that was intentionally left untouched in all the preceding steps for generating the hypotheses. Hypotheses were generated transparently through the process described above and pre-registered as they came, further restricting our degrees of freedom [22, 38, 24]. The pre-registration of this analysis is available on AsPredicted.org/S6H_ZPF (#172038), including the full text of hypotheses, sample sizes and regression specifications.",
+          "category": "method",
+          "termAnchors": [
+            {
+              "term": "p-hacking",
+              "offset": 67,
+              "length": 9,
+              "definitionKey": "p-hacking"
+            },
+            {
+              "term": "pre-registered",
+              "offset": 83,
+              "length": 14,
+              "definitionKey": "pre-registration"
+            },
+            {
+              "term": "HARKing",
+              "offset": 0,
+              "length": 0,
+              "definitionKey": "harking"
+            }
+          ]
+        },
+        {
+          "id": "p-2.4-2",
+          "text": "Study 1: We hand-picked 4 of the 16 (+ 2 others predicted to have a negative effect). We then had 800 Prolific users code 3.4k headlines from the hold-out set on each of the 6 features. Each participant saw 26 headlines, each on a separate page, randomly drawn from the set of 3,402. For each headline, participants were asked to \u201cselect the level which each trait is featured in this headline, from \u20181 (Low)\u2019 to \u20187 (High)\u2019.\u201d There was also an option to select \u201c0\u201d to indicate the trait was not present. The traits (i.e., features) were listed by their shorthand: (i) includes element of surprise followed by cliffhanger, (ii) incorporates parody, (iii) refers to multimedia evidence, (iv) describes physical reaction, (v) short and simple phrases, (vi) focus on positive aspects of human behavior.",
+          "category": "method"
+        },
+        {
+          "id": "p-2.4-3",
+          "text": "To test each of the six hypotheses, we estimate six OLS regressions:",
+          "category": "method",
+          "equations": [
+            {
+              "id": "eq-4",
+              "latex": "\\Delta\\text{CTR}_{a,b} = \\beta_0 + \\beta_r \\cdot \\Delta\\text{Rating}_{a,b} + \\varepsilon_{a,b}",
+              "label": "Eq. 4"
+            }
+          ]
+        },
+        {
+          "id": "p-2.4-4",
+          "text": "Five of the 6 features had meaningful effects (p = 0.297; p = 0.094; p = 0.046; p = 0.033; p < .001, p < .001). But are these novel? Controlling for BU features, 2 of 6 had significant effects (p < .001).",
+          "category": "finding"
+        },
+        {
+          "id": "p-2.4-5",
+          "text": "Study 2: To see whether these effects generalize to new contexts, we conducted the same tests with a different dataset: social media posts by an online entertainment company. The data we obtained contains a total of 553,328 different social media posts for various articles hosted on their website between July 2022 and February 2023. Here, 5,077 posts were split to test the hypotheses. Unlike the Upworthy dataset, the posts were not part of a randomized trial. Therefore, our primary outcome is the CTR (not \u0394CTR), defined here as the total clicks divided by the total reach.",
+          "category": "method"
+        },
+        {
+          "id": "p-2.4-6",
+          "text": "We had 900 users code 5,077 messages using the same survey structure as Study 1. One notable exception is that we regressed the CTR on the average rating; we did not differ in the variables as we did for Upworthy since the posts were not paired. Again, four out of the six hypothesized features were significant predictors of CTR (ps < .01), including (1) multimedia evidence, (2) physical reactions, (3) short, simple phrases, and (4) a focus on positive, human behavior. These are consistent with the evidence found in the Upworthy data, except for multimedia, for which the effect is in the opposite direction, and surprise, cliffhanger, for which there is a null effect.",
+          "category": "finding",
+          "marginNotes": [
+            {
+              "kind": "caveat",
+              "content": "The multimedia effect is in the **opposite direction** in Study 2. Surprise/cliffhanger is null. The authors treat this honestly in \u00a73."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Limitations",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "paragraphs": [
+        {
+          "id": "p-3-1",
+          "text": "An obvious limitation of any data-driven approach is that they are inherently data-driven (as opposed to theory-driven approaches, which start from existing literature or a standard model of the world). Science requires both [37, 3, 28] and, in fact, in marketing, both approaches are regularly used [21]. The downside of data-driven approaches is that without any background knowledge, it can be hard to contextualize observed effects or generalize them to new contexts without further testing. We see an example of this in the case of the multimedia feature; more research could help to reconcile the fact that the observed effect is in opposite directions in different domains. For example, different consumer groups may have varied responses to a similar hypothesis. While the framework presented here adds to the toolkit of data-driven approaches, the transparency of the outputs leaves room for researchers to search through the set with an eye for theoretically relevant insights.",
+          "category": "caveat"
+        },
+        {
+          "id": "p-3-2",
+          "text": "An open question remains regarding the right \u201clevel\u201d of a hypothesis. In setting up the procedure, we iterated on the prompts before landing on a set where the LLM responded with a hypothesis in a format we felt resembled hypotheses found in past papers. While off-the-shelf LLMs could conceivably draw on existing knowledge to produce more theoretically rich hypotheses [44], leaning into this would increase the chance the LLMs \u201challucinated\u201d or drew insights from a world model different from our own [41].",
+          "category": "caveat"
+        },
+        {
+          "id": "p-3-3",
+          "text": "Our pipeline assumes that data comes in the form of A/B tests, but this may be infeasible for some applications. Even with pairs of messages from the same trial, most pairs of headlines vary several things at once, making it hard to isolate sources of variation. It is conceivable that the hypotheses generated reflect this complexity; in fact, some did specify interactions (e.g., \u201cusing first-person narration and acknowledging personal change in beliefs leads to less engagement with a message,\u201d emphasis added). By choosing prompts for which the outputs were both empirically plausible and not overly complex, we may have shifted the distribution of hypotheses to be more substantive than theoretical.",
+          "category": "caveat"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Impacts",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "paragraphs": [
+        {
+          "id": "p-4-1",
+          "text": "This paper is intended to help marketing researchers, organizations, and policymakers generate new insights into what drives consumer behavior. We make several significant contributions: First, we introduce a framework to convert unstructured text into marketing insights. There are several recent papers exploring how researchers can use text to study consumer behavior [e.g., 19, 9, 12, 18, 20]. One persistent challenge with this unstructured data is interpretability [17, 18]. The framework we propose utilizes various existing technologies to help address this.",
+          "category": null
+        },
+        {
+          "id": "p-4-2",
+          "text": "Second, we generate and test actual marketing hypotheses. In doing so, we contribute to the literature studying how language affects engagement [e.g., 6, 25, 11, 10]. Using our framework, we uncover new insights, some adding to existing theories and others inspiring new questions. Although we tested a select set in this paper, our process generated dozens of hypotheses worth examining more closely in future research.",
+          "category": null
+        },
+        {
+          "id": "p-4-3",
+          "text": "In addition, this paper adds to the literature on organizational learning [36, 14, 16]. Organizations today continuously run A/B tests to learn how various messages affect consumers' behavior [25, 4, 31]. Nevertheless, many of these tests prioritize learning what works [e.g., by comparing wholesale changes; 23, 5] at the cost of learning why, which typically requires more carefully controlled experiments. This paper demonstrates how to aggregate insights from thousands of A/B tests in the form of specific hypotheses that others can carefully test.",
+          "category": null
+        },
+        {
+          "id": "p-4-4",
+          "text": "Finally, this paper contributes to the research on data-driven discovery and hypothesis generation [32, 27, 7, 2, 1]. While marketing researchers are driving some of the innovation in this space [e.g., 2, 7], a lot is also happening in outside disciplines such as computer science and economics [27, 45, 30]. This work tries to bridge this literature and, in doing so, broaden the reach of our field [29].",
+          "category": null
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "title": "Discussion",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "paragraphs": [
+        {
+          "id": "p-5-1",
+          "text": "The hypotheses derived from our framework have practical implications, serving as meaningful predictors of engagement as measured through click-through rates (CTR). These hypothesized features not only capture variation in CTR in the context in which they were discovered but also predict the CTR in other contexts. For instance, using social media posts from an online entertainment company, we found significant correlational evidence supporting four of the six hypotheses above. The evidence that these hypotheses extend to new contexts suggests that companies with multiple messaging channels or several brands can leverage our framework to inform a broader marketing strategy.",
+          "category": "finding"
+        },
+        {
+          "id": "p-5-2",
+          "text": "Whether these are novel, generalizable, and of general interest remains an open set of questions. On the question of novelty, we provide a partial answer. Statistically, at least two features \u2014 surprise, cliffhanger and multimedia reference \u2014 appear to capture information that is sufficiently different from the 51 psychological constructs derived in [6]. Nevertheless, one could argue that these features appear similar to insights already known. More empirical work is needed to answer this, so we leave this to future research.",
+          "category": "caveat"
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "title": "Conclusion",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "paragraphs": [
+        {
+          "id": "p-6-1",
+          "text": "The current paper produces new insights into what drives engagement. Importantly, it also offers a general framework that researchers and organizations can use to aggregate marketing insights from text. This framework can be applied whenever there is high-dimensional text data, such as text messages, emails, social media posts, brand slogans, advertising content, and customer service scripts. The data need not be structured, and the process requires little human interpretation. Nevertheless, the output is a set of hypotheses readily interpretable by humans.",
+          "category": null
+        },
+        {
+          "id": "p-6-2",
+          "text": "This paper presents a novel framework marketers could use to generate hypotheses from text data. Our approach integrates large-language models, machine-learning tools, and psychology experiments to produce hypotheses that are both novel and interpretable. By starting with unstructured data such as text messages, emails, social media posts, or headlines, our framework outputs hypotheses that are interpretable, novel, testable, and generalizable to other contexts.",
+          "category": "novel"
+        }
+      ]
+    }
+  ]
+}
